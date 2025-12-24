@@ -2,16 +2,19 @@ import React from 'react'
 import Navbar from '../../components/common/Navbar'
 import Hero from '../../components/Home components/Hero'
 import { Share2Icon } from 'lucide-react'
-
+import reviews from '../../components/Home components/Review'
+import Review from '../../components/Home components/Review'
+import { useNavigate } from 'react-router-dom'
 
 
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <div >
       <Navbar />
       <Hero />
-      <div className="mt-10 px-4">
+      <div className="my-15 px-4  ">
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
           {/* Campaigns */}
           <div>
@@ -208,7 +211,7 @@ function Home() {
         </div>
         {/* view all */}
         <div className='flex justify-center mt-12'>
-          <button className='border border-orange-600 text-orange-600 px-8 py-3 rounded-lg text-sm fnt-medium hover:bg-linear-to-br
+          <button onClick={() => navigate("/campaign-details")} className='border border-orange-600 text-orange-600 px-8 py-3 rounded-lg text-sm fnt-medium hover:bg-linear-to-br
         hover:from-orange-400
       hover:to-orange-600
       hover:text-white transition'>
@@ -218,63 +221,88 @@ function Home() {
         </div>
       </section>
       {/* who we are */}
+     <section className="bg-white py-20">
+
+  {/* TOP IMAGE */}
+  <div className="w-full mb-20">
+    <div
+  className="
+    w-full h-72 md:h-96
+    bg-[url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c')]
+    bg-cover bg-center
+    bg-scroll md:bg-attach-fixed
+  "
+>
+</div>
+  </div>
+
+  {/* CIRCULAR IMAGE CLUSTER */}
+  <div className="flex justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-center max-w-5xl">
+
+      <img
+        src="https://plus.unsplash.com/premium_photo-1683140538884-07fb31428ca6"
+        alt="charity"
+        className="w-40 h-40 md:w-full md:h-52 rounded-full object-cover grayscale"
+      />
+
+      <img
+        src="/log2-removebg-preview.png"
+        alt="FundRise Logo"
+        className="w-44 h-44 md:w-full md:h-56 rounded-full object-contain "
+      />
+
+      <img
+        src="https://c8.alamy.com/comp/F3GW1X/charity-people-from-city-giving-water-to-vari-pilgrim-at-pune-maharashtra-F3GW1X.jpg"
+        alt="charity"
+        className="w-40 h-40 md:w-full md:h-52 rounded-full object-cover grayscale"
+      />
+
+    </div>
+  </div>
+
+  {/* TEXT CONTENT */}
+  <div className="text-center mt-20 px-6">
+    <h1 className="text-3xl md:text-4xl font-semibold mb-4">
+      More Than{" "}
+      <span className="font-bold text-orange-600">
+        10 Million
+      </span>{" "}
+      People Have Benefited
+    </h1>
+
+    <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+      Trusted by millions worldwide to fund hope, healing, and opportunity
+      through transparent and secure fundraising.
+    </p>
+
+    <button
+      className="bg-linear-to-br from-orange-400 to-orange-600 text-white
+      px-6 py-3 rounded-lg text-sm md:text-base
+      hover:opacity-90 transition"
+    >
+      Donate Now
+    </button>
+  </div>
+
+  {/* BOTTOM IMAGE */}
+  <div className="w-full mt-20">
+     <div
+  className="
+    w-full h-72 md:h-96
+    bg-[url('https://images.unsplash.com/photo-1593113598332-cd288d649433')]
+    bg-cover bg-center
+    bg-scroll md:bg-attach-fixed
+  "
+></div>
+  
+  </div>
+
+</section>
+
+      {/* testimoonials */}
       <section>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2 items-center justify-center mx-40 mt-30">
-
-          <img
-            src="https://plus.unsplash.com/premium_photo-1683140538884-07fb31428ca6?fm=jpg&q=60&w=3000"
-            alt="charity"
-            className="
-          w-40 h-40
-          sm:w-48 sm:h-48
-          md:w-125 md:h-56
-          rounded-full object-cover
-          
-        "
-          />
-
-
-          <img
-            src="/log2-removebg-preview.png"
-            alt="charity"
-            className="
-        ms-28
-          w-40 h-40
-          sm:w-48 sm:h-48
-          md:w-56 md:h-56
-          rounded-full object-cover
-          
-          
-        "
-          />
-
-          <img
-            src="https://plus.unsplash.com/premium_photo-1683140538884-07fb31428ca6?fm=jpg&q=60&w=3000"
-            alt="charity"
-            className="
-          w-40 h-40
-          sm:w-48 sm:h-48
-          md:w-125 md:h-56
-          rounded-full object-cover
-          
-        "
-          />
-
-        </div>
-        <h1 className="text-4xl text-center mt-24 mb-4">
-          More Than <span className="font-bold text-orange-600">10 Million</span>People Have Benefited From This Platform
-        </h1>
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
-          Trusted by millions worldwide to fund hope, healing, and opportunity.
-        </p>
-        <div className="flex justify-center my-6">
-          <button className="bg-linear-to-br from-orange-400 to-orange-600 text-white
-          px-5 py-3 sm:px-6 sm:py-3
-          rounded-md text-sm sm:text-base
-          hover:  transition">
-            Donate Now
-          </button>
-        </div>
+        <Review/>
       </section>
     </div >
 

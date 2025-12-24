@@ -14,19 +14,20 @@ function Hero() {
       {/* Text section */}
       <div className="mt-30 px-4">
         <h1 className="text-center font-medium my-4
-          text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+          text-3xl sm:text-4xl md:text-4xl lg:text-5xl">
           Be the{" "}
           <span className="font-bold block sm:inline
-            text-5xl sm:text-6xl md:text-6xl lg:text-7xl">
+            text-5xl sm:text-6xl md:text-6xl lg:text-6xl text-orange-600">
             Hero
           </span>{" "}
+          
           that changes people's lives
         </h1>
 
         <h2 className="text-center text-sm sm:text-md md:text-lg
           max-w-3xl mx-auto text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Odit illo debitis minus beatae soluta aperiam.
+          Every contribution brings someone closer to a better tomorrow.
+          Real change begins with people like you.
         </h2>
       </div>
 
@@ -54,7 +55,7 @@ function Hero() {
               w-24 h-40
               sm:w-28 sm:h-48
               md:w-32 md:h-56
-              lg:w-56 lg:h-84
+              lg:w-56 lg:h-104
               rounded-full object-cover
               grayscale hover:grayscale-0
               transition-all duration-300
