@@ -1,13 +1,13 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
-import Home from './Pages/public/Home'
-import Footer from "./components/common/Footer"
+import Home from './User/Pages/Home'
+import Footer from "./components/Footer"
 import Login from "./Auth/Login"
 import Register from "./Auth/Register"
-import FundriserDashboard from "./FundRiser/FundriserDashboard"
-import CreateCampaign from "./FundRiser/CreateCampaign"
-import CampaignDetails from "./Pages/public/CampaignDetails"
-import ViewCampaign from "./Pages/public/ViewCampaign"
+import FundriserDashboard from "./User/Pages/FundriserDashboard"
+import CreateCampaign from "./User/Pages/CreateCampaign"
+import CampaignDetails from "./User/Pages/CampaignDetails"
+import ViewCampaign from "./User/Pages/ViewCampaign"
 export default function App() {
   return (
     <>

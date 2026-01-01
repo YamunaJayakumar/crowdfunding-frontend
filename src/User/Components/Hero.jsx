@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function Hero() {
+  const navigate = useNavigate();
   const images = [
     "https://plus.unsplash.com/premium_photo-1683140523610-13deecbd20b1?q=80&w=687&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1578496781985-452d4a934d50?q=80&w=1170&auto=format&fit=crop",
@@ -33,11 +36,11 @@ function Hero() {
 
       {/* Button */}
       <div className="flex justify-center my-6">
-        <button className="bg-linear-to-br from-orange-400 to-orange-600 text-white
+        <button onClick={()=>{navigate('/campaign-details')}} className="bg-linear-to-br from-orange-400 to-orange-600 text-white
           px-5 py-3 sm:px-6 sm:py-3
           rounded-md text-sm sm:text-base
           hover:  transition">
-          Start Campaign
+          Donate Now
         </button>
       </div>
 

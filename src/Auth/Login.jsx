@@ -19,19 +19,19 @@ function Login() {
           </div>
 
           <h2 className="text-2xl font-bold text-center mb-6">
-            Login to KindHeart
+            Login to <span className="text-orange-600">KindHeart</span>
           </h2>
 
           <input
             type="text"
             placeholder="Username"
-            className="w-full mb-4 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+            className="w-full mb-4 px-4 py-3 border border-orange-400 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
 
           <input
             type="password"
             placeholder="Password"
-            className="w-full mb-6 px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+            className="w-full mb-6 px-4 py-3 border border-orange-400 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
 
           <button className="w-full bg-linear-to-br from-orange-400 to-orange-600 text-white py-3 rounded-md font-medium hover:opacity-90 transition">

@@ -2,14 +2,14 @@ import React from 'react'
 
 function Footer() {
   return (
-    <footer className="bg-gray-300 text-gray-800 py-10 px-6">
+    <footer className="bg-gray-200 text-gray-800 py-10 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         
         {/* Logo + About */}
         <div className="flex flex-col items-start">
           <div className="flex items-center gap-2 mb-4">
             <img width={30} src="/log2-removebg-preview.png" alt="KindHeart Fund Logo" />
-            <h4 className="text-xl font-bold text-gray-800">KindHeart Fund</h4>
+            <h4 className="text-2xl font-bold text-gray-800">KindHeart</h4>
           </div>
           <p className="text-sm text-gray-500 text-justify">
             We turn kindness into action. We connect donors with causes in medical aid, education, emergencies, and nonprofits—impacting millions of lives with transparency and trust. Join us and make a difference today.
