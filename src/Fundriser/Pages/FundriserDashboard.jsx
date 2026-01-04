@@ -78,7 +78,7 @@ function FundriserDashboard() {
   return (
     <>
     <FundriserHeader/>
-      <div className='min-h-screen px-6 py-2 space-y-2 bg-gray-50' >
+      <div className='min-h-screen px-6 py-3 space-y-2 bg-gray-50' >
       
         <div className='space-y-8 flex flex-col md:flex-row'>
           <FundraiserSidebar />

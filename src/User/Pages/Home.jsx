@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 import Hero from '../Components/Hero'
 import { Share2Icon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-
+import Footer from '../../components/Footer'
 function Home() {
   const navigate = useNavigate();
 
@@ -20,8 +20,8 @@ function Home() {
             { value: "30+", label: "Causes" },
             { value: "40M+", label: "Lives Impacted" },
           ].map((stat, i) => (
-            <div key={i} className="p-6 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition">
-              <h3 className="text-5xl md:text-6xl font-bold bg-gradient-to-br from-orange-400 to-orange-600 bg-clip-text text-transparent">
+            <div key={i} className="p-6 bg-white rounded-3xl  flex flex-col items-center ">
+              <h3 className="text-5xl md:text-6xl font-bold bg-linear-to-br from-orange-400 to-orange-600 bg-clip-text text-transparent">
                 {stat.value}
               </h3>
               <p className="text-lg text-gray-600 mt-2">{stat.label}</p>
@@ -31,7 +31,7 @@ function Home() {
       </div>
 
       {/* CAMPAIGNS SECTION */}
-      <section className="py-20 bg-orange-50/40">
+      <section className="py-20 ">
         <h1 className="text-4xl text-center font-semibold mb-4">
           Supporting causes at <span className="font-bold text-orange-600">every level</span>
         </h1>
@@ -39,15 +39,15 @@ function Home() {
           Discover verified campaigns for medical needs, emergencies, education & NGO initiatives.
         </p>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 px-4">
           {[1,2,3,4].map((card)=>(
-            <div key={card} className="relative bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all">
+            <div key={card} className="relative bg-white rounded-3xl shadow-lg overflow-hidden ">
               <img
                 className="w-full h-48 object-cover rounded-t-3xl"
                 src="https://images.unsplash.com/photo-1578496781985-452d4a934d50?auto=format&fit=crop&w=800&q=60"
                 alt="fundriser"
               />
-              <span className="absolute top-4 left-4 bg-gradient-to-br from-orange-400 to-orange-600 text-white text-xs px-3 py-1 rounded-full shadow-sm">
+              <span className="absolute top-4 left-4 bg-linear-to-br from-orange-400 to-orange-600 text-white text-xs px-3 py-1 rounded-full shadow-sm">
                 Medical
               </span>
               <div className="p-6">
@@ -72,7 +72,7 @@ function Home() {
                   <button className="border border-orange-600 text-orange-600 px-4 py-2 rounded-md text-sm hover:bg-gradient-to-br hover:from-orange-400 hover:to-orange-600 hover:text-white transition">
                     Donate
                   </button>
-                  <Share2Icon className="text-orange-600 hover:scale-110 transition cursor-pointer" />
+                  
                 </div>
               </div>
             </div>
@@ -108,13 +108,14 @@ function Home() {
           <p className="text-gray-600 max-w-2xl mx-auto mt-4">
             A trusted space for transparent fundraising — where every donation tells a story of hope.
           </p>
-          <button className="mt-8 bg-gradient-to-br from-orange-400 to-orange-600 text-white px-6 py-3 rounded-lg">
+          <button className="mt-8 bg-linear-to-br from-orange-400 to-orange-600 text-white px-6 py-3 rounded-lg">
             Donate Now
           </button>
         </div>
 
         <div className="w-full h-80 bg-[url('https://images.unsplash.com/photo-1593113598332-cd288d649433')] bg-cover bg-center bg-fixed mt-20" />
       </section>
+      <Footer/>
     </div>
   )
 }

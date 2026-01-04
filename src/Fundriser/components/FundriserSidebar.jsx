@@ -17,9 +17,7 @@ function FundraiserSidebar() {
 
       {/* ===== PROFILE INFO ===== */}
       <div className="flex flex-col items-center mb-8">
-        <div className="w-18 h-18 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-2xl mb-3">
-          R
-        </div>
+        <img className="w-20 h-20 rounded-full" src="https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg" alt="person" />
         <h2 className="text-lg font-semibold text-gray-900">Ravi Kumar</h2>
         <p className="text-sm text-gray-500">Individual Fundraiser ✔️</p>
       </div>

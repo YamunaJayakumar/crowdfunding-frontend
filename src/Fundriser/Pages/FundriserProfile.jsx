@@ -18,7 +18,7 @@ function FundriserProfile() {
     <>
       <FundriserHeader />
 
-      <div className="min-h-screen grid grid-cols-4 bg-gray-50">
+      <div className="min-h-screen grid grid-cols-4 ">
 
         {/* SIDEBAR */}
         <div className="col-span-1  bg-white">
@@ -64,7 +64,7 @@ function FundriserProfile() {
                 type="text"
                 placeholder="Username"
                 className="w-full px-4 py-3 border rounded-lg border-gray-400
-                  focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  "
               />
             {/* password */}
               <input
@@ -74,7 +74,7 @@ function FundriserProfile() {
                 type="password"
                 placeholder="New Password"
                 className="w-full px-4 py-3 border rounded-lg border-gray-400
-                  focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  "
               />
              {/* confirm password */}
               <input
@@ -84,7 +84,7 @@ function FundriserProfile() {
                 type="password"
                 placeholder="Confirm Password"
                 className="w-full px-4 py-3 border rounded-lg border-gray-400
-                  focus:outline-none focus:ring-2 focus:ring-orange-400"
+                  "
               />
             </form>
 

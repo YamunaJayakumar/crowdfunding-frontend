@@ -5,7 +5,7 @@ function CreateCampaign() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
+    <div className="min-h-screen  p-6 flex justify-center">
       <div className="w-full max-w-7xl">
 
         {/* HEADER */}
@@ -109,7 +109,7 @@ function CreateCampaign() {
             </div>
 
             <p className="text-sm text-gray-500 mt-2">
-              Upload images or documents to build trust with donors.
+              Upload  documents to build trust with donors.
             </p>
           </section>
 
@@ -130,7 +130,7 @@ function CreateCampaign() {
           <div className="flex justify-end gap-4">
             <button
               type="button"
-              onClick={() => navigate("/fundraiser/dashboard")}
+              onClick={() => navigate("/fundriser-dashboard")}
               className="border border-orange-500 text-orange-500 px-6 py-2 rounded-lg hover:bg-gray-50"
             >
               Cancel

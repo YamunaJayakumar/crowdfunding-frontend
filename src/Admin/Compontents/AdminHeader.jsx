@@ -1,9 +1,8 @@
 import React from 'react'
-function FundriserHeader() {
-      
+
+function AdminHeader() {
   return (
-   
-<header>
+    <div><header>
       {/*  Logo */}
       <div className="flex items-center gap-3 px-7">
         {/* Logo placeholder */}
@@ -12,15 +11,15 @@ function FundriserHeader() {
         </div>
         {/* Welcome message */}
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Welcome back, Ravi!</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">Welcome back, Admin!</h1>
           <p className="text-sm text-gray-500">Manage your campaigns from here.</p>
         </div>
       </div>
 
      
 
-    </header>
+    </header></div>
   )
 }
 
-export default FundriserHeader
+export default AdminHeader
