@@ -69,21 +69,16 @@ function FundriserDashboard() {
     { name: "Education", value: 30 },
     { name: "Animals", value: 15 },
   ];
-  // recentDonations
-  const recentDonations = [
-  { name: "Anjali R.", amount: 500, time: "2h ago" },
-  { name: "Ravi K.", amount: 250, time: "5h ago" },
-  
-];
+ 
   return (
     <>
     <FundriserHeader/>
-      <div className='min-h-screen px-6 py-3 space-y-2 bg-gray-50' >
+      <div className='min-h-screen  bg-gray-50' >
       
         <div className='space-y-8 flex flex-col md:flex-row'>
           <FundraiserSidebar />
           
-          <div className='flex-1 p-6 space-y-2'>
+          <div className='flex-1 p-6 space-y-5 mt-10'>
              {/* =======================
                 STATS CARDS
             ======================== */}
@@ -168,22 +163,7 @@ function FundriserDashboard() {
               </div>
       
             </div>
-            {/* recent donation */}
-            <div className="bg-white p-6 rounded-2xl shadow">
-        <h3 className="text-lg font-semibold mb-4 text-gray-900">Recent Donations</h3>
-  
-        <ul className="divide-y divide-gray-200">
-          {recentDonations.map((donation, index) => (
-            <li key={index} className="flex justify-between items-center py-2">
-              <div className="flex flex-col">
-                <span className="font-medium text-gray-800">{donation.name}</span>
-                <span className="text-gray-400 text-xs">{donation.time}</span>
-              </div>
-              <div className="text-orange-600 font-semibold">${donation.amount}</div>
-            </li>
-          ))}
-        </ul>
-      </div>
+         
           </div>
         </div>
       </div>

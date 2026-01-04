@@ -1,11 +1,19 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import Hero from '../Components/Hero'
-import { Share2Icon } from 'lucide-react'
+
 import { useNavigate } from 'react-router-dom'
 import Footer from '../../components/Footer'
+import Testimonials from '../Components/Testimonials'
+import AboutSection from '../Components/AboutSection'
 function Home() {
   const navigate = useNavigate();
+  const testimonials = [
+    { id: 1, name: "Alice Johnson", text: "This platform helped me get my first developer job!", role: "Frontend Developer", img: "/u.jpeg" },
+    { id: 2, name: "Michael Lee", text: "The courses are very practical and project-focused.", role: "Data Analyst", img: "/u2.jpeg" },
+    { id: 3, name: "Sara Williams", text: "I loved the hands-on approach and mentor support!", role: "UI/UX Designer", img: "/u3.jpeg" },
+    { id: 4, name: "David Kim", text: "A great learning experience with real-world projects.", role: "Backend Developer", img: "/u.jpeg" }
+  ];
 
   return (
     <div className="bg-white">
@@ -21,7 +29,7 @@ function Home() {
             { value: "40M+", label: "Lives Impacted" },
           ].map((stat, i) => (
             <div key={i} className="p-6 bg-white rounded-3xl  flex flex-col items-center ">
-              <h3 className="text-5xl md:text-6xl font-bold bg-linear-to-br from-orange-400 to-orange-600 bg-clip-text text-transparent">
+              <h3 className="text-5xl md:text-8xl font-bold bg-linear-to-br from-orange-400 to-orange-600 bg-clip-text text-transparent">
                 {stat.value}
               </h3>
               <p className="text-lg text-gray-600 mt-2">{stat.label}</p>
@@ -63,7 +71,7 @@ function Home() {
                     <span>₹5,00,000 Goal</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-gradient-to-br from-orange-400 to-orange-600 h-2 rounded w-[48%]"></div>
+                    <div className="bg-linear-to-br from-orange-400 to-orange-600 h-2 rounded w-[48%]"></div>
                   </div>
                 </div>
 
@@ -82,11 +90,14 @@ function Home() {
         <div className="flex justify-center mt-14">
           <button
             onClick={() => navigate("/campaign-details")}
-            className="px-8 py-3 text-orange-600 border border-orange-600 rounded-lg hover:bg-gradient-to-br hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
+            className="px-8 py-3 text-orange-600 border border-orange-600 rounded-lg hover:bg-linear-to-br hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
           >
             View All Campaigns
           </button>
         </div>
+      </section>
+      <section>
+        <AboutSection/>
       </section>
 
       {/* WHO WE ARE / STORY SECTION */}
@@ -114,6 +125,10 @@ function Home() {
         </div>
 
         <div className="w-full h-80 bg-[url('https://images.unsplash.com/photo-1593113598332-cd288d649433')] bg-cover bg-center bg-fixed mt-20" />
+      </section>
+      {/* textmonials */}
+      <section>
+    <Testimonials/>
       </section>
       <Footer/>
     </div>

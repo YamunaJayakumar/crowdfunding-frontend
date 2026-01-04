@@ -2,29 +2,42 @@ import React, { useEffect, useState } from 'react'
 import FundraiserSidebar from '../components/FundriserSidebar'
 import FundriserHeader from '../components/FundriserHeader'
 import { Link } from 'react-router-dom'
+import { FaExclamationCircle } from 'react-icons/fa'
 
 
 function FundriserMyCampaigns() {
     const [campaignArray, setCampaignArray] = useState([])
     const [openWithdrawModal, setOpenWithdrawModal] = useState(false)
-    
-     const campaign = {
-    raisedAmount: 240000,
-    targetAmount: 500000,
+
+    const campaign = {
+        raisedAmount: 240000,
+        targetAmount: 500000,
     }
-     const [confirm, setConfirm] = useState(false)
+    const [confirm, setConfirm] = useState(false)
     const progress = Math.min(
-    (campaign.raisedAmount / campaign.targetAmount) * 100,
-    100
-  );
-  
-  
+        (campaign.raisedAmount / campaign.targetAmount) * 100,
+        100
+    );
+
+    const [bankDetails, setBankDetails] = useState({
+        accountHolder: "",
+        accountNumber: "",
+        ifsc: "",
+        bankName: "",
+    });
+    const isBankDetailsValid =
+        bankDetails.accountHolder.trim() !== "" &&
+        bankDetails.accountNumber.trim() !== "" &&
+        bankDetails.ifsc.trim() !== "" &&
+        bankDetails.bankName.trim() !== "";
+
+
 
     return (
         <div>
-            
+
             <FundriserHeader />
-            <div className="grid grid-cols-1 md:grid-cols-5 py-5">
+            <div className="grid grid-cols-1 md:grid-cols-5 ">
                 <div className="cols-span-1">
                     <FundraiserSidebar />
                 </div>
@@ -89,20 +102,23 @@ function FundriserMyCampaigns() {
                             {/* Card Actions */}
                             <div className="flex gap-3 pt-2">
                                 <Link to={'/fundriser/view-campaign'} className="flex-1 border border-orange-500 text-orange-500 py-2 rounded-lg text-sm text-center">
-                                    
-                                        View
-                                    
+
+                                    View
+
                                 </Link>
 
-                                <button onClick={() => setOpenWithdrawModal(true)}
-                                    className={`flex-1 py-2 rounded-lg font-semibold text-white transition ${progress >= 100
+                                <button
+                                    onClick={() => setOpenWithdrawModal(true)}
+                                    className={`flex-1 py-2 rounded-lg font-semibold text-white ${progress >= 100
                                             ? "bg-orange-500 hover:bg-orange-600"
                                             : "bg-gray-300 cursor-not-allowed"
                                         }`}
-                                    disabled={progress < 100}
+                                        disabled={progress < 100}
+                                       
                                 >
                                     Withdraw
                                 </button>
+
                                 {/* withdraw modal */}
                                 {openWithdrawModal && (
                                     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -139,6 +155,127 @@ function FundriserMyCampaigns() {
                                                 <div className="flex justify-between font-semibold border-t pt-2">
                                                     <span>Withdrawable Amount</span>
                                                     <span>$9,500</span>
+                                                </div>
+                                            </div>
+                                            <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+                                                <div className="bg-white rounded-xl w-full max-w-md p-6 space-y-5">
+
+                                                    {/* Modal Header */}
+                                                    <div>
+                                                        <h2 className="text-xl font-semibold text-gray-800">
+                                                            Withdraw Funds
+                                                        </h2>
+                                                        <p className="text-sm text-gray-500">
+                                                            Review details before confirming withdrawal
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Campaign Summary */}
+                                                    <div className="border rounded-lg p-4 space-y-2 text-sm">
+                                                        <div className="flex justify-between">
+                                                            <span className="text-gray-500">Campaign</span>
+                                                            <span className="font-medium">Education for Rural Children</span>
+                                                        </div>
+
+                                                        <div className="flex justify-between">
+                                                            <span className="text-gray-500">Total Raised</span>
+                                                            <span>$10,000</span>
+                                                        </div>
+
+                                                        <div className="flex justify-between">
+                                                            <span className="text-gray-500">Platform Fee</span>
+                                                            <span>$500</span>
+                                                        </div>
+
+                                                        <div className="flex justify-between font-semibold border-t pt-2">
+                                                            <span>Withdrawable Amount</span>
+                                                            <span>$9,500</span>
+                                                        </div>
+                                                    </div>
+                                                    {/* BANK DETAILS */}
+                                                    <div className="border rounded-lg p-4 space-y-3">
+                                                        <h3 className="font-semibold text-gray-700 text-sm">
+                                                            Bank Details (for payout)
+                                                        </h3>
+
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Account Holder Name"
+                                                            value={bankDetails.accountHolder}
+                                                            onChange={(e) =>
+                                                                setBankDetails({ ...bankDetails, accountHolder: e.target.value })
+                                                            }
+                                                            className="w-full border rounded-md px-3 py-2 text-sm"
+                                                        />
+
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Account Number"
+                                                            value={bankDetails.accountNumber}
+                                                            onChange={(e) =>
+                                                                setBankDetails({ ...bankDetails, accountNumber: e.target.value })
+                                                            }
+                                                            className="w-full border rounded-md px-3 py-2 text-sm"
+                                                        />
+
+                                                        <input
+                                                            type="text"
+                                                            placeholder="IFSC Code"
+                                                            value={bankDetails.ifsc}
+                                                            onChange={(e) =>
+                                                                setBankDetails({ ...bankDetails, ifsc: e.target.value })
+                                                            }
+                                                            className="w-full border rounded-md px-3 py-2 text-sm"
+                                                        />
+
+                                                        <input
+                                                            type="text"
+                                                            placeholder="Bank Name"
+                                                            value={bankDetails.bankName}
+                                                            onChange={(e) =>
+                                                                setBankDetails({ ...bankDetails, bankName: e.target.value })
+                                                            }
+                                                            className="w-full border rounded-md px-3 py-2 text-sm"
+                                                        />
+
+                                                        <p className="text-xs text-gray-500 flex items-center gap-1">
+                                                            <FaExclamationCircle />
+                                                            Ensure details are correct. Changes are not allowed after submission.
+                                                        </p>
+                                                    </div>
+
+
+                                                    {/* Confirmation */}
+                                                    <label className="flex items-start gap-2 text-sm text-gray-600">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={confirm}
+                                                            onChange={() => setConfirm(!confirm)}
+                                                        />
+                                                        I confirm that all campaign details are correct and I want to proceed.
+                                                    </label>
+
+                                                    {/* Actions */}
+                                                    <div className="flex justify-end gap-3 pt-2">
+                                                        <button
+                                                            onClick={() => setOpenWithdrawModal(false)}
+                                                            className="px-4 py-2 text-sm border rounded-lg"
+                                                        >
+                                                            Cancel
+                                                        </button>
+
+                                                        <button
+                                                            disabled={!confirm || !isBankDetailsValid}
+                                                            className={`px-4 py-2 text-sm rounded-lg text-white ${confirm && isBankDetailsValid
+                                                                ? "bg-orange-500 hover:bg-orange-600"
+                                                                : "bg-gray-400 cursor-not-allowed"
+                                                                }`}
+                                                        >
+                                                            Confirm Withdrawal
+                                                        </button>
+                                                    </div>
+
                                                 </div>
                                             </div>
 

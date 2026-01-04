@@ -25,7 +25,7 @@ function Navbar() {
         <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
           <li className="hover:text-orange-600 transition cursor-pointer">Home</li>
           <li className="hover:text-orange-600 transition cursor-pointer">Campaigns</li>
-          <li className="hover:text-orange-600 transition cursor-pointer">How it works</li>
+          <li className="hover:text-orange-600 transition cursor-pointer">Reviews</li>
           <li className="hover:text-orange-600 transition cursor-pointer">Who we are</li>
         </ul>
 
@@ -33,7 +33,7 @@ function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <button 
             onClick={() => navigate('/login')} 
-            className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm hover:bg-orange-700 transition"
+            className=" bg-linear-to-br from-orange-400 to-orange-600 text-white px-4 py-2 rounded-md text-sm hover:bg-orange-700 transition"
           >
             Start Campaign
           </button>

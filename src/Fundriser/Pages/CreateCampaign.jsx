@@ -130,7 +130,7 @@ function CreateCampaign() {
           <div className="flex justify-end gap-4">
             <button
               type="button"
-              onClick={() => navigate("/fundriser-dashboard")}
+              onClick={() => navigate("/fundriser/dashboard")}
               className="border border-orange-500 text-orange-500 px-6 py-2 rounded-lg hover:bg-gray-50"
             >
               Cancel

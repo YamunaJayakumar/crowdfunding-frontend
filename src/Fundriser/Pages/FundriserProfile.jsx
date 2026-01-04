@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FundraiserSidebar from "../components/FundriserSidebar";
 import FundriserHeader from "../components/FundriserHeader";
 import { FaPen } from "react-icons/fa";
-FaPen
+
 function FundriserProfile() {
   const [formData, setFormData] = useState({
     username: "",
