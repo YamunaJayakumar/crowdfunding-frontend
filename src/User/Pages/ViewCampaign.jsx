@@ -14,7 +14,17 @@ import { FaExclamationCircle } from "react-icons/fa";
 function ViewCampaign() {
   const [amount, setAmount] = useState("");
   const [showThanks, setShowThanks] = useState(false);
-  const[showReportModal,setShowReportModal]=useState(false)
+  const [showReportModal, setShowReportModal] = useState(false)
+
+  const [billingInfo, setBillingInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
+    state: "",
+    
+  });
+
 
   const campaign = {
     title: "Help Aarav Fight Cancer",
@@ -106,7 +116,7 @@ function ViewCampaign() {
                 </p>
                 <div className="space-y-2">
                   <h4 className="text-sm font-medium text-gray-700">
-                    Documents reviewed 
+                    Documents reviewed
                   </h4>
                   <ul className="text-sm text-gray-600 list-disc list-inside">
                     {
@@ -158,50 +168,50 @@ function ViewCampaign() {
 
             <p className="text-xs text-gray-500">Created 10 days ago</p>
             {/* report modal */}
-            <button onClick={()=>setShowReportModal(!showReportModal)} className=" flex  items-center gap-2 border border-gray-300 text-sm px-4 py-3 rounded-lg hover:bg-gray-100 transition">
+            <button onClick={() => setShowReportModal(!showReportModal)} className=" flex  items-center gap-2 border border-gray-300 text-sm px-4 py-3 rounded-lg hover:bg-gray-100 transition">
               <FaExclamationCircle className="text-orange-500" size={20} /> Report fundraiser
             </button>
 
             {/* modal form */}
-           {showReportModal && (
-  <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
-    <div
-      className="bg-white w-full max-w-md rounded-xl p-6 space-y-4 shadow-lg"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="report-title"
-    >
-      <h2 id="report-title" className="text-lg font-semibold text-gray-800">
-        Report Fundraiser
-      </h2>
+            {showReportModal && (
+              <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+                <div
+                  className="bg-white w-full max-w-md rounded-xl p-6 space-y-4 shadow-lg"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="report-title"
+                >
+                  <h2 id="report-title" className="text-lg font-semibold text-gray-800">
+                    Report Fundraiser
+                  </h2>
 
-      <p className="text-sm text-gray-600">
-        Tell us why you are reporting this campaign.
-      </p>
+                  <p className="text-sm text-gray-600">
+                    Tell us why you are reporting this campaign.
+                  </p>
 
-      <textarea
-        className="w-full border-orange-500 rounded-lg p-3 text-sm "
-        rows="4"
-        placeholder="Describe the issue..."
-      />
+                  <textarea
+                    className="w-full border-orange-500 rounded-lg p-3 text-sm "
+                    rows="4"
+                    placeholder="Describe the issue..."
+                  />
 
-      <div className="flex justify-end gap-3">
-        <button
-          onClick={() => setShowReportModal(false)}
-          className="px-4 py-2 text-sm rounded-lg border border-orange-500 text-orange-400 hover:border-orange-600 hover:text-orange-600"
-        >
-          Cancel
-        </button>
+                  <div className="flex justify-end gap-3">
+                    <button
+                      onClick={() => setShowReportModal(false)}
+                      className="px-4 py-2 text-sm rounded-lg border border-orange-500 text-orange-400 hover:border-orange-600 hover:text-orange-600"
+                    >
+                      Cancel
+                    </button>
 
-        <button
-          className="px-4 py-2 text-sm rounded-lg bg-orange-500 text-white hover:bg-orange-600"
-        >
-          Submit Report
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+                    <button
+                      className="px-4 py-2 text-sm rounded-lg bg-orange-500 text-white hover:bg-orange-600"
+                    >
+                      Submit Report
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
           </div>
 
@@ -229,7 +239,7 @@ function ViewCampaign() {
             <div className="relative w-full h-3 bg-gray-400 border border-gray-400  rounded-full overflow-hidden">
               <div
                 className="absolute left-0 top-0 h-full bg-linear-to-r from-orange-400 to-orange-600 rounded-full transition-all"
-                style={{ width: `${Math.max(progress,3)}%` }}
+                style={{ width: `${Math.max(progress, 3)}%` }}
               />
             </div>
 
@@ -237,6 +247,67 @@ function ViewCampaign() {
               {Math.floor(progress)}%  of goal reached
             </p>
           </div>
+
+          {/* Billing Information */}
+          <div className="bg-gray-50 border border-gray-400 rounded-xl p-5 space-y-4">
+            <h4 className="text-sm font-semibold text-gray-700">
+              Billing Information
+            </h4>
+
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm"
+              value={billingInfo.name}
+              onChange={(e) =>
+                setBillingInfo({ ...billingInfo, name: e.target.value })
+              }
+            />
+
+            <input
+              type="email"
+              placeholder="Email Address"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm"
+              value={billingInfo.email}
+              onChange={(e) =>
+                setBillingInfo({ ...billingInfo, email: e.target.value })
+              }
+            />
+
+            <input
+              type="tel"
+              placeholder="Phone Number (optional)"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 text-sm"
+              value={billingInfo.phone}
+              onChange={(e) =>
+                setBillingInfo({ ...billingInfo, phone: e.target.value })
+              }
+            />
+
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="City"
+                className="w-1/2 px-4 py-2 rounded-lg border border-gray-300 text-sm"
+                value={billingInfo.city}
+                onChange={(e) =>
+                  setBillingInfo({ ...billingInfo, city: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="State"
+                className="w-1/2 px-4 py-2 rounded-lg border border-gray-300 text-sm"
+                value={billingInfo.state}
+                onChange={(e) =>
+                  setBillingInfo({ ...billingInfo, state: e.target.value })
+                }
+              />
+            </div>
+
+            
+          </div>
+
 
           {/* Amount Input */}
           <div className="space-y-2">
@@ -275,7 +346,7 @@ function ViewCampaign() {
 
           {/* Donate Button */}
           <button
-          aria-label="Donate to this campaign"
+            aria-label="Donate to this campaign"
             onClick={handlePayment}
             disabled={!amount || parseFloat(amount) <= 0}
             className="w-full py-3 cursor-pointer rounded-xl font-semibold text-white bg-linear-to-r from-orange-500 to-orange-600 hover:shadow-lg  disabled:opacity-50 disabled:cursor-not-allowed"

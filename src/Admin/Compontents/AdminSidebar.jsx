@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
-import { FaTachometerAlt, FaUser, FaSignOutAlt, FaFlag } from "react-icons/fa";
+import { FaTachometerAlt, FaUser, FaSignOutAlt, FaFlag, FaClock } from "react-icons/fa";
 import { FaMoneyBillTransfer } from 'react-icons/fa6';
 import { BsGraphUp } from 'react-icons/bs';
 
@@ -10,6 +10,7 @@ function AdminSidebar() {
         { title: "Dashboard", icon: <FaTachometerAlt />, path: "/admin/dashboard" },
         { title: "Campaign Analytics", icon: <BsGraphUp />, path: "/admin/campaign-analytics" },
         { title: "Campaign Approval", icon: <FaFlag/>, path: "/admin/fund-approval" },
+        { title: "Donation History", icon: <FaClock/>, path: "/admin/donation-history" },
         { title: "Withdrawal Approvals", icon: <FaMoneyBillTransfer />, path: "/admin/withdrawal-approval" },
         { title: "Profile Settings", icon: <FaUser />, path: "/admin/profile" },
         { title: "Logout", icon: <FaSignOutAlt />, path: "/login" }

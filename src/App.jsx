@@ -18,6 +18,7 @@ import FundriserApproval from "./Admin/Pages/FundriserApproval"
 import WithdrawalApproval from "./Admin/Pages/WithdrawalApproval"
 import AdminCampaignAnalytics from "./Admin/Pages/AdminCampaignAnalytics"
 import Pnf from "./components/Pnf"
+import AdminDonationhistory from "./Admin/Pages/AdminDonationhistory"
 
 
 
@@ -45,6 +46,7 @@ export default function App() {
       <Route path={'/admin/fund-approval'} element={<FundriserApproval/>}/>
       <Route path={'/admin/withdrawal-approval'} element={<WithdrawalApproval/>}/>
       <Route path={'/admin/campaign-analytics'} element={<AdminCampaignAnalytics/>}/>
+      <Route path={'/admin/donation-history'} element={<AdminDonationhistory/>}/>
 
       <Route path={'/*'} element={<Pnf/>}/>
     </Routes>
