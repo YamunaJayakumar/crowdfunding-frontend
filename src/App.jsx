@@ -17,6 +17,7 @@ import AdminProfile from "./Admin/Pages/AdminProfile"
 import FundriserApproval from "./Admin/Pages/FundriserApproval"
 import WithdrawalApproval from "./Admin/Pages/WithdrawalApproval"
 import AdminCampaignAnalytics from "./Admin/Pages/AdminCampaignAnalytics"
+import Pnf from "./components/Pnf"
 
 
 
@@ -30,6 +31,8 @@ export default function App() {
       <Route path={'/'} element={<Home/>}/>
       <Route path={'/login'} element={<Login/>}/>
       <Route path={'/register'} element={<Register/>}/>
+      <Route path={'/campaign-details'} element={<CampaignDetails/>}/>
+      <Route path={'/view-campaign'} element={<ViewCampaign/>}/>
 
       <Route path={'/fundriser/dashboard'} element={<FundriserDashboard/>}/>
       <Route path={'/fundraiser/create-campaign'} element={<CreateCampaign/>}/>
@@ -41,12 +44,9 @@ export default function App() {
       <Route path={'/admin/profile'} element={<AdminProfile/>}/>
       <Route path={'/admin/fund-approval'} element={<FundriserApproval/>}/>
       <Route path={'/admin/withdrawal-approval'} element={<WithdrawalApproval/>}/>
-       <Route path={'/admin/campaign-analytics'} element={<AdminCampaignAnalytics/>}/>
+      <Route path={'/admin/campaign-analytics'} element={<AdminCampaignAnalytics/>}/>
 
-
-      <Route path={'/campaign-details'} element={<CampaignDetails/>}/>
-      <Route path={'/view-campaign'} element={<ViewCampaign/>}/>
-
+      <Route path={'/*'} element={<Pnf/>}/>
     </Routes>
     
     </>
