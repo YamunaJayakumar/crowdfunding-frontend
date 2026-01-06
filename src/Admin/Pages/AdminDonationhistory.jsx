@@ -46,9 +46,9 @@ function AdminDonationhistory() {
                     <div className="mx-10 ">
                         
 
-                        <div className=" bg-white rounded-xl shadow-sm ">
+                        <div className=" bg-white rounded-xl  shadow-sm ">
                             <table className="min-w-full text-sm">
-                                <thead className="bg-gray-100 text-gray-600">
+                                <thead className="bg-orange-300 rounded-2xl text-gray-600">
                                     <tr>
                                         <th className="px-4 py-3 text-left">Campaign</th>
                                         <th className="px-4 py-3 text-left">Donor</th>

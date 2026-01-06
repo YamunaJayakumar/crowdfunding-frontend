@@ -1,91 +1,120 @@
-import React, { useState } from "react";
+import React from "react";
 import AdminSidebar from "../Compontents/AdminSidebar";
 import AdminHeader from "../Compontents/AdminHeader";
-status
+
 function AdminCampaignAnalytics() {
-     const campaigns = [
+  // Example data: All fundraisers with their campaigns
+  const fundraisers = [
     {
       id: 1,
-      title: "Medical Help for Ravi",
-      category: "Medical",
-      target: "₹2,00,000",
-      createdAt: "2026-01-04",
-      status: "active",
+      username: "Niha",
+      email: "niha@gmail.com",
+      role: "fundraiser",
+      campaigns: [
+        {
+          id: 101,
+          title: "Medical Help for Ravi",
+          category: "Medical",
+          target: "₹2,00,000",
+          createdAt: "2026-01-04",
+          status: "active",
+        },
+        {
+          id: 102,
+          title: "School Supplies for Kids",
+          category: "Education",
+          target: "₹50,000",
+          createdAt: "2026-01-02",
+          status: "pending",
+        },
+      ],
     },
     {
       id: 2,
-      title: "School Supplies for Kids",
-      category: "Education",
-      target: "₹50,000",
-      createdAt: "2026-01-02",
-      status: "pending",
-    },
-    {
-      id: 3,
-      title: "Flood Relief Kerala",
-      category: "Disaster",
-      target: "₹5,00,000",
-      createdAt: "2025-12-28",
-      status: "closed",
+      username: "Rahul",
+      email: "rahul@gmail.com",
+      role: "fundraiser",
+      campaigns: [
+        {
+          id: 201,
+          title: "Flood Relief Kerala",
+          category: "Disaster",
+          target: "₹5,00,000",
+          createdAt: "2025-12-28",
+          status: "closed",
+        },
+      ],
     },
   ];
+
+  // Flatten campaigns for table
+  const allCampaigns = fundraisers.flatMap((fundraiser) =>
+    fundraiser.campaigns.map((campaign) => ({
+      ...campaign,
+      fundraiserName: fundraiser.username,
+      fundraiserEmail: fundraiser.email,
+      fundraiserRole: fundraiser.role,
+    }))
+  );
+
   return (
-    <div> <div>
+    <div className="min-h-screen ">
       <AdminHeader />
 
-      <div className="grid grid-cols-4 min-h-screen">
-        {/* SIDEBAR */}
-        <div className="col-span-1">
+      <div className="grid grid-cols-4">
+        {/* Sidebar */}
+        <div className="col-span-1 bg-white min-h-screen">
           <AdminSidebar />
         </div>
 
-        {/* MAIN CONTENT */}
-        <div className="col-span-3 mt-18 ">
-          
-            
-               {/* Campaign Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-5">
-            {campaigns.map(campaign => (
-              <div
-                key={campaign.id}
-                className="bg-white rounded-xl shadow p-5 space-y-2"
-              >
-                <div className="flex justify-between items-start">
-                  <h2 className="text-lg font-semibold">
-                    {campaign.title}
-                  </h2>
-                  <span className={`text-xs px-3 py-1 rounded-full font-semibold ${
-    campaign.status === "active"
-      ? "bg-green-100 text-green-700"
-      : campaign.status === "pending"
-      ? "bg-orange-100 text-orange-700"
-      : "bg-red-100 text-red-700"
-  }`}>
-                                    {campaign.status}
-                                </span>
-                  
-                </div>
-
-                <p className="text-sm text-gray-500">
-                  Category: {campaign.category}
-                </p>
-                <p className="text-sm text-gray-500">
-                  Target: {campaign.target}
-                </p>
-                <p className="text-xs text-gray-400">
-                  Created on {campaign.createdAt}
-                </p>
-              </div>
-            ))}
-          </div>
-
-            
-
+        {/* Main Content */}
+        <div className="col-span-3  ">
+          <div className="overflow-x-auto bg-white rounded-xl shadow-sm ">
+            <table className="min-w-full text-sm ">
+              <thead>
+                <tr className="bg-orange-300 text-left">
+                  <th className="p-3 ">Campaign Title</th>
+                  <th className="p-3 ">Fundraiser</th>
+                  <th className="p-3 ">Email</th>
+                  <th className="p-3 ">Role</th>
+                  <th className="p-3 ">Category</th>
+                  <th className="p-3 ">Target</th>
+                  <th className="p-3 ">Created On</th>
+                  <th className="p-3 ">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allCampaigns.map((campaign) => (
+                  <tr key={campaign.id} className="hover:bg-gray-50">
+                    <td className="p-3 border-b ">{campaign.title}</td>
+                    <td className="p-3  border-b ">{campaign.fundraiserName}</td>
+                    <td className="p-3   border-b">{campaign.fundraiserEmail}</td>
+                    <td className="p-3  border-b">{campaign.fundraiserRole}</td>
+                    <td className="p-3  border-b ">{campaign.category}</td>
+                    <td className="p-3  border-b">{campaign.target}</td>
+                    <td className="p-3  border-b">{campaign.createdAt}</td>
+                    <td className="p-3  border-b">
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                          campaign.status === "active"
+                            ? "bg-green-100 text-green-700"
+                            : campaign.status === "pending"
+                            ? "bg-orange-100 text-orange-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {campaign.status.toUpperCase()}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default AdminCampaignAnalytics
+export default AdminCampaignAnalytics;

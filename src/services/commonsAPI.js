@@ -1,3 +1,4 @@
+import axios from "axios"
 const commonsAPI =async(httpMethod,url,reqBody,reqHeader)=>{
     const reqConfig={
         method:httpMethod,
