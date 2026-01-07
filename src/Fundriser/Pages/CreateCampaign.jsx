@@ -1,8 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 function CreateCampaign() {
   const navigate = useNavigate();
+  const [verified, setVerified] = useState(false);
+  
+  const [campaign, setCampaign] = useState({
+    title: "",
+    category: "",
+    location: "",
+    beneficiary: "",
+    shortDescription: "",
+    longDescription: "",
+    goalAmount: "",
+    minDonation: "",
+    endDate: "",
+    image: null,      // first file input
+    documents: [],   // second file input (multiple)
+  });
+  console.log(campaign);
+  
+  const [previewDocs, setPreviewDocs] = useState([]); // optional preview
+
+  const handleDocumentUpload=(e)=>{
+    const files=Array.from(e.target.files)
+    setCampaign(prev=>({
+      ...prev,documents:[...prev.documents,...files]
+
+    }))
+    const filenames=files.map(file=>file.name)
+    setPreviewDocs(prev=>[...prev,...filenames])
+
+  }
+  const handleImgupload=(e)=>{
+    const file=e.target.files[0]//only one file
+    setCampaign(prev=>({...prev,image:file}))
+    
+
+  }
+  const handleSubmit=async(e)=>{
+    e.preventDefault()
+    const {title,category,location,beneficiary,shortDescription,longDescription,goalAmount,minDonation,endDate,image,documents}=campaign
+    if(!title|| !category || !location || !beneficiary || !shortDescription|| !longDescription|| !goalAmount|| !minDonation  ||!endDate || !image || documents.length==0||!verified){
+      toast.info("please fill the form")
+     
+    }
+    else{
+      toast.success("apicall")
+    }
+
+
+  }
+
 
   return (
     <div className="min-h-screen  p-6 flex justify-center">
@@ -27,12 +77,17 @@ function CreateCampaign() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
+              value={campaign.title}
+              onChange={e=>setCampaign({...campaign,title:e.target.value})}
                 type="text"
                 placeholder="Campaign Title"
                 className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
               />
 
-              <select className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none">
+              <select
+              value={campaign.category}
+              onChange={(e)=>setCampaign({...campaign,category:e.target.value})}
+               className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none">
                 <option>Select Category</option>
                 <option>Health</option>
                 <option>Education</option>
@@ -40,12 +95,16 @@ function CreateCampaign() {
               </select>
 
               <input
+              value={campaign.location}
+              onChange={e=>setCampaign({...campaign,location:e.target.value})}
                 type="text"
                 placeholder="Location"
                 className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
               />
 
               <input
+              value={campaign.beneficiary}
+              onChange={e=>setCampaign({...campaign,beneficiary:e.target.value})}
                 type="text"
                 placeholder="Beneficiary Name"
                 className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
@@ -53,6 +112,9 @@ function CreateCampaign() {
             </div>
 
             <textarea
+            value={campaign.shortDescription}
+              onChange={e=>setCampaign({...campaign,shortDescription:e.target.value})}
+
               placeholder="Short description (max 150 characters)"
               className="border border-orange-500 rounded-lg px-4 py-2 w-full mt-4 focus:ring-2 focus:ring-orange-400 outline-none"
               rows="3"
@@ -67,19 +129,28 @@ function CreateCampaign() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <input
+               value={campaign.goalAmount}
+              onChange={e=>setCampaign({...campaign,goalAmount:e.target.value})}
+
                 type="number"
                 placeholder="Target Amount (₹)"
                 className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
               />
 
               <input
+               value={campaign.endDate}
+              onChange={e=>setCampaign({...campaign,endDate:e.target.value})}
+
                 type="date"
                 className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
               />
 
               <input
+               value={campaign. minDonation}
+              onChange={e=>setCampaign({...campaign, minDonation:e.target.value})}
+
                 type="number"
-                placeholder="Minimum Donation (optional)"
+                placeholder="Minimum Donation "
                 className="border border-orange-500 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
               />
             </div>
@@ -92,20 +163,40 @@ function CreateCampaign() {
             </h2>
 
             <textarea
+             value={campaign.longDescription}
+              onChange={e=>setCampaign({...campaign,longDescription:e.target.value})}
+
               placeholder="Tell your story in detail..."
               rows="6"
               className="border border-orange-500 rounded-lg px-4 py-2 w-full mb-4 focus:ring-2 focus:ring-orange-400 outline-none"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+             <label htmlFor="imgupload" className="cursor-pointer">
+                <input
+                id="imgupload"
+                  type="file"
+                  accept=".jpg,.jpeg,.png"
+                  onChange={handleImgupload}
+                  className="border border-orange-500 rounded-lg px-4 py-2"
+                />
+               
+             </label>
+              {/* Documents Upload */}
               <input
                 type="file"
+                multiple                 // allow multiple selection
+                onChange={handleDocumentUpload}
                 className="border border-orange-500 rounded-lg px-4 py-2"
               />
-              <input
-                type="file"
-                className="border border-orange-500 rounded-lg px-4 py-2"
-              />
+
+              {/* Optional Preview */}
+              <div className="mt-2">
+                {previewDocs.map((name, index) => (
+                  <p key={index} className="text-sm text-gray-600">{name}</p>
+                ))}
+              </div>
             </div>
 
             <p className="text-sm text-gray-500 mt-2">
@@ -117,6 +208,8 @@ function CreateCampaign() {
           <section className="bg-white p-6 rounded-xl shadow">
             <label className="flex items-start gap-3">
               <input
+              checked={verified}
+              onChange={e=>setVerified(e.target.checked)}
                 type="checkbox"
                 className=" border border-orange-500 mt-1 accent-orange-500"
               />
@@ -137,7 +230,7 @@ function CreateCampaign() {
             </button>
 
             <button
-              type="submit"
+            onClick={handleSubmit}
               className="bg-linear-to-br from-orange-400 to-orange-600 text-white px-8 py-2 rounded-lg hover:opacity-90"
             >
               Submit for Review
@@ -149,6 +242,11 @@ function CreateCampaign() {
           </p>
         </form>
       </div>
+      <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              theme="colored"
+            />
     </div>
   );
 }

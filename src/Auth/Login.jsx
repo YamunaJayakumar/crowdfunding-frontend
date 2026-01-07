@@ -3,7 +3,9 @@ import React, { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify';
-import { loginAPI } from '../services/allAPI';
+import { googleLoginAPI, loginAPI } from '../services/allAPI';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const navigate = useNavigate()
@@ -53,6 +55,39 @@ function Login() {
       toast.info("fill the form completely")
 
     }
+
+  }
+  //google-login
+  const handlegoogleLogin=async(credentialResponse)=>{
+    console.log("inside handle google login");
+    console.log(credentialResponse);
+    const decode=jwtDecode(credentialResponse.credential)
+    console.log(decode);
+    const result=await googleLoginAPI({username:decode.name,email:decode.email,password:'googlePassword',picture:decode.picture})
+    console.log("FULL RESPONSE:", result);
+console.log("RESULT.DATA:", result?.data?.role);
+    if(result.status==200){
+      toast.success("Login Successfull")
+      sessionStorage.setItem("token",result.data.token)
+      sessionStorage.setItem("user",JSON.stringify(result.data.user))
+      setTimeout(()=>{
+        if(result.data.user.role =="admin"){
+          navigate('/admin/dashboard')
+        }
+        else{
+          navigate('/')
+        }
+      },2500)
+    }else{
+      console.log(result);
+      toast.error("something went wrong")
+      
+    }
+
+    
+    
+
+    
 
   }
 
@@ -113,6 +148,21 @@ function Login() {
           <button onClick={handleLogin} className="w-full bg-linear-to-br from-orange-400 to-orange-600 text-white py-3 rounded-md font-medium hover:opacity-90 transition">
             Login
           </button>
+          {/* google autehntication */}
+          <p>----------------------------or---------------------------</p>
+          <div className='my-5 flex items-center justify-center w-full'>
+        
+
+            <GoogleLogin
+              onSuccess={credentialResponse => {
+              handlegoogleLogin(credentialResponse)
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
+
+          </div>
 
           <p className="text-xs text-center text-gray-500 mt-4">
             New user? ·{" "}
