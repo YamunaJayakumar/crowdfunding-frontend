@@ -3,8 +3,7 @@ import FundraiserSidebar from "../components/FundriserSidebar";
 import FundriserHeader from "../components/FundriserHeader";
 import { FaPen } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { updateFundraiserProfileAPI } from "../../services/allAPI";
-import { ToastContainer, toast } from 'react-toastify';
+
 
 function FundriserProfile() {
   const {id}=useParams()
