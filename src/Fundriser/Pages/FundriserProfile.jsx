@@ -2,17 +2,28 @@ import React, { useState } from "react";
 import FundraiserSidebar from "../components/FundriserSidebar";
 import FundriserHeader from "../components/FundriserHeader";
 import { FaPen } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { updateFundraiserProfileAPI } from "../../services/allAPI";
+import { ToastContainer, toast } from 'react-toastify';
 
 function FundriserProfile() {
+  const {id}=useParams()
+  console.log(id)
   const [formData, setFormData] = useState({
     username: "",
     passWord: "",
     confirmPassWord: "",
+    picture:null
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+   
+  
+
+
+  
 
   return (
     <>
@@ -108,6 +119,11 @@ function FundriserProfile() {
 
           </div>
         </div>
+        <ToastContainer
+                                  position="top-center"
+                                  autoClose={3000}
+                                  theme="colored"
+                                />
       </div>
     </>
   );

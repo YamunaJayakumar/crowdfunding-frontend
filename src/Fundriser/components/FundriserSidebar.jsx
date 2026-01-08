@@ -1,8 +1,25 @@
+import { useEffect, useState } from "react";
 import { FaTachometerAlt, FaPlusCircle, FaWallet, FaUser, FaSignOutAlt,FaFlag } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+
 function FundraiserSidebar() {
   const navigate = useNavigate();
+  const[dp,setDp]=useState();
+  const[username,setUsername]=useState();
+  
+  console.log(username,dp)
+
+  useEffect(()=>{
+    if(sessionStorage.getItem("token")){
+      const user=JSON.parse(sessionStorage.getItem("user"))
+      setUsername(user?.username)
+      setDp(user?.picture)
+    console.log(user)
+    }
+  
+
+  },[])
 
   const menuItems = [
     { title: "Dashboard", icon: <FaTachometerAlt />, path: "/fundriser/dashboard" },
@@ -17,9 +34,9 @@ function FundraiserSidebar() {
 
       {/* ===== PROFILE INFO ===== */}
       <div className="flex flex-col items-center mb-8">
-        <img className="w-20 h-20 rounded-full" src="https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg" alt="person" />
-        <h2 className="text-lg font-semibold text-gray-900">Ravi Kumar</h2>
-        <p className="text-sm text-gray-500">Individual Fundraiser ✔️</p>
+        <img className="w-20 h-20 rounded-full" src={dp?dp:"https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg"} alt="person" />
+        <h2 className="text-lg font-semibold text-gray-900">{username}</h2>
+        <p className="text-sm text-gray-500">verified ✔️</p>
       </div>
 
       {/* ===== NAVIGATION ===== */}

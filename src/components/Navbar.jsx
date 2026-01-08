@@ -71,8 +71,8 @@ function Navbar() {
               // profile &dropdown
               <div className="relative inline-block text-left ms-2">
                 <button onClick={()=>setDropDown(!dropDown)} className="w-full bg-white px-3 py-2 shadow-xs  rounded-full hover:bg-gray-200">
-                <img width="40" height="40" style={{ borderRadius: "50%" }} src={dp?dp.startsWith("https://lh3.googleusercontent.com/"):
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl5UMKpklREIr0fL1SsjTaXc8G3NbfGdGx7g&s"} alt="profile" />
+                <img width="40" height="40" style={{ borderRadius: "50%" }} src={dp?dp.startsWith("https://lh3.googleusercontent.com/")?dp.startsWith("https://lh3.googleusercontent.com/"):dp
+                  :"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl5UMKpklREIr0fL1SsjTaXc8G3NbfGdGx7g&s"} alt="profile" />
                </button>
                 {/* dropdown */}
                 {

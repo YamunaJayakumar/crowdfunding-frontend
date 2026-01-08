@@ -3,19 +3,26 @@ import FundraiserSidebar from '../components/FundriserSidebar'
 import FundriserHeader from '../components/FundriserHeader'
 import { Link } from 'react-router-dom'
 import { FaExclamationCircle } from 'react-icons/fa'
+import { ToastContainer, toast } from 'react-toastify';
+import { viewAllCampaignAPI } from '../../services/allAPI'
+
 
 
 function FundriserMyCampaigns() {
     const [campaignArray, setCampaignArray] = useState([])
-    const [openWithdrawModal, setOpenWithdrawModal] = useState(false)
+    const [openWithdrawModal, setOpenWithdrawModal] = useState(null)
+    console.log(campaignArray)
+      useEffect(()=>{
+        getMyCampaigns()
 
-    const campaign = {
-        raisedAmount: 240000,
-        targetAmount: 500000,
-    }
-    const [confirm, setConfirm] = useState(false)
+    },[])
+    // const campaign = {
+    //     raisedAmount: 240000,
+    //     targetAmount: 500000,
+    // }
+    // const [confirm, setConfirm] = useState(false)
     const progress = Math.min(
-        (campaign.raisedAmount / campaign.targetAmount) * 100,
+        (200 / campaignArray.goalAmount) * 100,
         100
     );
 
@@ -30,7 +37,27 @@ function FundriserMyCampaigns() {
         bankDetails.accountNumber.trim() !== "" &&
         bankDetails.ifsc.trim() !== "" &&
         bankDetails.bankName.trim() !== "";
+    
 
+  const getMyCampaigns =async()=>{
+    const token=sessionStorage.getItem("token")
+    if(!token){
+        toast.warning("please login")
+    }
+    const reqHeader={
+        'Authorization':`Bearer ${token}`
+    }
+    try{
+        const result =await viewAllCampaignAPI(reqHeader)
+        if(result.status===200){
+            setCampaignArray(result.data)
+        }
+
+    }catch(err){
+        toast.warning(err)
+    }
+
+  }
 
 
     return (
@@ -53,22 +80,24 @@ function FundriserMyCampaigns() {
                             Manage, track, and withdraw funds from your campaigns
                         </p>
                     </div>
-
                     {/* Campaign Grid */}
+                    
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                         {/* Campaign Card */}
-                        <div className="bg-white  rounded-xl shadow-md p-5 space-y-4">
+                        {campaignArray?.length>0?
+                        campaignArray.map(item=>( 
+                             <div key={item?._id} className="bg-white  rounded-xl shadow-md p-5 space-y-4">
 
                             {/* Card Header */}
-                            <div className="flex items-start justify-between">
+                            <div  className="flex items-start justify-between">
                                 {/* campaign head */}
                                 <h2 className="font-semibold text-gray-800 leading-tight">
-                                    Medical Help for Aarush
+                                    {item?.title}
                                 </h2>
                                 {/* campaign-status */}
                                 <span className="text-xs px-3 py-1 rounded-full bg-green-100 text-green-700">
-                                    Active
+                                   {item?.status}
                                 </span>
                             </div>
 
@@ -78,10 +107,11 @@ function FundriserMyCampaigns() {
                                 {/* Amounts */}
                                 <div className="flex justify-between text-sm text-gray-600">
                                     <span>
-                                        Raised: <strong className="text-gray-800">$3,455</strong>
+                                        Raised: <strong className="text-gray-800">{item?.totalRaised
+}</strong>
                                     </span>
                                     <span>
-                                        Target: <strong className="text-gray-800">$4,444</strong>
+                                        Target: <strong className="text-gray-800">{item?.goalAmount}</strong>
                                     </span>
                                 </div>
 
@@ -101,7 +131,7 @@ function FundriserMyCampaigns() {
 
                             {/* Card Actions */}
                             <div className="flex gap-3 pt-2">
-                                <Link to={'/fundriser/view-campaign'} className="flex-1 border border-orange-500 text-orange-500 py-2 rounded-lg text-sm text-center">
+                                <Link to={`/fundraiser/campaign/${item._id}/view`} className="flex-1 border border-orange-500 text-orange-500 py-2 rounded-lg text-sm text-center">
 
                                     View
 
@@ -119,7 +149,16 @@ function FundriserMyCampaigns() {
                                     Withdraw
                                 </button>
 
-                                {/* withdraw modal */}
+                               
+
+                            </div>
+                             
+
+                        </div>
+
+                        )): <p>loading</p>
+                          }
+                        {/* withdraw modal */}
                                 {openWithdrawModal && (
                                     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 
@@ -311,14 +350,15 @@ function FundriserMyCampaigns() {
                                     </div>
                                 )}
 
-                            </div>
-
-                        </div>
-
                     </div>
                 </div>
 
             </div>
+            <ToastContainer
+                          position="top-center"
+                          autoClose={3000}
+                          theme="colored"
+                        />
         </div>
     )
 }

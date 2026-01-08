@@ -17,6 +17,19 @@ export const googleLoginAPI=async(userDetails)=>{
 }
 //createcampaignAPI-called when submit btn clciked in createcampaign component
 export const createCampaignAPI=async(reqBody,reqHeader)=>{
-    return await commonsAPI("POST",`${serverURL}/fundriser/campaign/create`,reqBody,reqHeader)
+    return await commonsAPI("POST",`${serverURL}/fundraiser/campaign/create`,reqBody,reqHeader)
 
 }
+//view all campaign-fundraiser
+export const viewAllCampaignAPI=async(reqHeader)=>{
+    return await commonsAPI("GET",`${serverURL}/fundraiser/campaign/all`,{},reqHeader)
+
+}
+//view one campaign-fundraiser
+export const viewOneCampaignAPI=async(id,reqHeader)=>{
+     return await commonsAPI("GET",`${serverURL}/fundraiser/campaign/${id}/view`,{},reqHeader) }
+//update fundraiserProfile-/fundraiser/:id/edit
+export const updateFundraiserProfileAPI=async(id,reqHeader)=>{
+     return await commonsAPI("GET",`${serverURL}/fundraiser/${id}/edit`,{},reqHeader) }
+
+

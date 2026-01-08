@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { createCampaignAPI } from "../../services/allAPI";
 
 function CreateCampaign() {
   const navigate = useNavigate();
@@ -47,9 +48,47 @@ function CreateCampaign() {
      
     }
     else{
-      toast.success("apicall")
-    }
+      // toast.success("api call")
+      const token=sessionStorage.getItem("token")
+      if(token){
+        //headers
+        const reqHeader={
+          'Authorization':`Bearer ${token}`
+        }
+        //body
+        const reqBody=new FormData()
+        reqBody.append("title",title)
+        reqBody.append("category",category)
+        reqBody.append("location",location)
+        reqBody.append("beneficiary", beneficiary)
+        reqBody.append("shortDescription", shortDescription)
+        reqBody.append("longDescription", longDescription)
+        reqBody.append("goalAmount", goalAmount)
+        reqBody.append("minDonation", minDonation)
+        reqBody.append("endDate", endDate)
+        reqBody.append("image", image)
+        documents.forEach((doc)=>
+        reqBody.append('documents',doc))
 
+        
+          const result =await createCampaignAPI(reqBody,reqHeader)
+          if(result.status === 200){
+            toast.success("campaign created successfully")
+            setTimeout(()=>{
+              navigate('/fundriser/dashboard')
+
+            },25000)
+          }
+          else if(result.status == 401){
+            toast.warning(result.response.data)
+          }
+      }
+      else{
+        toast.error("something went wrong")
+      }
+    
+     
+    }
 
   }
 
