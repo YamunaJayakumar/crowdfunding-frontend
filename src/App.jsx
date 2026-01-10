@@ -37,6 +37,7 @@ export default function App() {
 
       <Route path={'/fundriser/dashboard'} element={<FundriserDashboard/>}/>
       <Route path={'/fundraiser/create-campaign'} element={<CreateCampaign/>}/>
+      <Route path={'/fundraiser/campaign/:id/edit'} element={<CreateCampaign/>}/>
       <Route path={'/fundraiser/:id/edit'} element={<FundriserProfile/>}/>
       <Route path={'/fundriser/my-campaigns'} element={<FundriserMyCampaigns/>}/>
       <Route path={'//fundraiser/campaign/:id/view'} element={<FundriserViewCampaign/>}/>

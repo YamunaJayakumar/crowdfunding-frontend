@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import FundraiserSidebar from '../components/FundriserSidebar'
 import FundriserHeader from '../components/FundriserHeader'
-import { Link } from 'react-router-dom'
-import { FaExclamationCircle } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaExclamationCircle, FaTrash } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify';
-import { viewAllCampaignAPI } from '../../services/allAPI'
+import { deleteCampaignAPI, viewAllCampaignAPI } from '../../services/allAPI'
+
 
 
 
 function FundriserMyCampaigns() {
+    const navigate=useNavigate()
     const [campaignArray, setCampaignArray] = useState([])
     const [openWithdrawModal, setOpenWithdrawModal] = useState(null)
     console.log(campaignArray)
@@ -58,6 +60,27 @@ function FundriserMyCampaigns() {
     }
 
   }
+  const deleteCampaign=async(id)=>{
+    const token=sessionStorage.getItem("token")
+     const reqHeader = {
+      'Authorization': `Bearer ${token}`,
+    };
+    const result=await deleteCampaignAPI(id,reqHeader)
+    if(result.status==200){
+        toast.success("campaign deleted successfully")
+
+        setCampaignArray(prev=>prev.filter(item=>item._id != id))
+       
+
+    }
+    else{
+        console.log(result)
+        toast.error("active/closed campaigns can not be deleted")
+    }
+
+
+
+  }
 
 
     return (
@@ -87,8 +110,10 @@ function FundriserMyCampaigns() {
                         {/* Campaign Card */}
                         {campaignArray?.length>0?
                         campaignArray.map(item=>( 
+                            
                              <div key={item?._id} className="bg-white  rounded-xl shadow-md p-5 space-y-4">
-
+                                <button onClick={()=>deleteCampaign(item._id)} className='text-red-500 '><FaTrash/></button>
+                                
                             {/* Card Header */}
                             <div  className="flex items-start justify-between">
                                 {/* campaign head */}
@@ -96,9 +121,10 @@ function FundriserMyCampaigns() {
                                     {item?.title}
                                 </h2>
                                 {/* campaign-status */}
-                                <span className="text-xs px-3 py-1 rounded-full bg-green-100 text-green-700">
+                                <span className={item.status=="pending"?"text-xs px-3 py-1 rounded-full bg-green-100 text-green-700":item.status=="closed"?"text-xs px-3 py-1 rounded-full bg-green-100 text-red-700":"text-xs px-3 py-1 rounded-full bg-green-100 text-orange-700"}>
                                    {item?.status}
                                 </span>
+                                
                             </div>
 
                             {/* Card Body */}
@@ -136,6 +162,12 @@ function FundriserMyCampaigns() {
                                     View
 
                                 </Link>
+                                <button onClick={()=>navigate(`/fundraiser/campaign/${item._id}/edit`)} disabled={item.status!="pending"?true:false} className="flex-1 border border-orange-500 text-orange-500 py-2 rounded-lg text-sm text-center">
+ 
+                                    Edit
+
+                                </button>
+
 
                                 <button
                                     onClick={() => setOpenWithdrawModal(true)}
@@ -200,38 +232,9 @@ function FundriserMyCampaigns() {
 
                                                 <div className="bg-white rounded-xl w-full max-w-md p-6 space-y-5">
 
-                                                    {/* Modal Header */}
-                                                    <div>
-                                                        <h2 className="text-xl font-semibold text-gray-800">
-                                                            Withdraw Funds
-                                                        </h2>
-                                                        <p className="text-sm text-gray-500">
-                                                            Review details before confirming withdrawal
-                                                        </p>
-                                                    </div>
+                                                   
 
-                                                    {/* Campaign Summary */}
-                                                    <div className="border rounded-lg p-4 space-y-2 text-sm">
-                                                        <div className="flex justify-between">
-                                                            <span className="text-gray-500">Campaign</span>
-                                                            <span className="font-medium">Education for Rural Children</span>
-                                                        </div>
-
-                                                        <div className="flex justify-between">
-                                                            <span className="text-gray-500">Total Raised</span>
-                                                            <span>$10,000</span>
-                                                        </div>
-
-                                                        <div className="flex justify-between">
-                                                            <span className="text-gray-500">Platform Fee</span>
-                                                            <span>$500</span>
-                                                        </div>
-
-                                                        <div className="flex justify-between font-semibold border-t pt-2">
-                                                            <span>Withdrawable Amount</span>
-                                                            <span>$9,500</span>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     {/* BANK DETAILS */}
                                                     <div className="border rounded-lg p-4 space-y-3">
                                                         <h3 className="font-semibold text-gray-700 text-sm">
@@ -316,34 +319,6 @@ function FundriserMyCampaigns() {
                                                     </div>
 
                                                 </div>
-                                            </div>
-
-                                            {/* Confirmation */}
-                                            <label className="flex items-start gap-2 text-sm text-gray-600">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={confirm}
-                                                    onChange={() => setConfirm(!confirm)}
-                                                />
-                                                I confirm that all campaign details are correct and I want to proceed.
-                                            </label>
-
-                                            {/* Actions */}
-                                            <div className="flex justify-end gap-3 pt-2">
-                                                <button
-                                                    onClick={() => setOpenWithdrawModal(false)}
-                                                    className="px-4 py-2 text-sm border rounded-lg"
-                                                >
-                                                    Cancel
-                                                </button>
-
-                                                <button
-                                                    disabled={!confirm}
-                                                    className={`px-4 py-2 text-sm rounded-lg text-white ${confirm ? "bg-orange-500" : "bg-gray-400 cursor-not-allowed"
-                                                        }`}
-                                                >
-                                                    Confirm Withdrawal
-                                                </button>
                                             </div>
 
                                         </div>

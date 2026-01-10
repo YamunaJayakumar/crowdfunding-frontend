@@ -29,7 +29,16 @@ export const viewAllCampaignAPI=async(reqHeader)=>{
 export const viewOneCampaignAPI=async(id,reqHeader)=>{
      return await commonsAPI("GET",`${serverURL}/fundraiser/campaign/${id}/view`,{},reqHeader) }
 //update fundraiserProfile-/fundraiser/:id/edit
-export const updateFundraiserProfileAPI=async(id,reqHeader)=>{
-     return await commonsAPI("GET",`${serverURL}/fundraiser/${id}/edit`,{},reqHeader) }
+export const updateFundraiserProfileAPI=async(id,reqBody,reqHeader)=>{
+     return await commonsAPI("PUT",`${serverURL}/fundraiser/${id}/edit`,reqBody,reqHeader)
+     }
+//edit a campaign
+export const editCampaignAPI=async(id,reqHeader)=>{
+     return await commonsAPI("PUT",`${serverURL}/fundraiser/campaign/${id}/edit`,{},reqHeader)
+     }
+//delete a campaign by fundraiser
+export const deleteCampaignAPI=async(id,reqHeader)=>{
+     return await commonsAPI("DELETE",`${serverURL}/fundraiser/${id}`,{},reqHeader)
+     }
 
 

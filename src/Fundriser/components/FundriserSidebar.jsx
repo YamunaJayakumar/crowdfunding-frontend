@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaTachometerAlt, FaPlusCircle, FaWallet, FaUser, FaSignOutAlt,FaFlag } from "react-icons/fa";
+import serverURL from '../../services/serverURL'
 import { useNavigate } from "react-router-dom";
 
 
@@ -7,15 +8,22 @@ function FundraiserSidebar() {
   const navigate = useNavigate();
   const[dp,setDp]=useState();
   const[username,setUsername]=useState();
+  const[id,setId]=useState()
+  console.log(id)
+  
   
   console.log(username,dp)
 
   useEffect(()=>{
     if(sessionStorage.getItem("token")){
       const user=JSON.parse(sessionStorage.getItem("user"))
+      
       setUsername(user?.username)
       setDp(user?.picture)
-    console.log(user)
+      setId(user?._id)
+      console.log(user)
+      
+      
     }
   
 
@@ -25,7 +33,7 @@ function FundraiserSidebar() {
     { title: "Dashboard", icon: <FaTachometerAlt />, path: "/fundriser/dashboard" },
     { title: "My Campaigns", icon: <FaFlag />, path: "/fundriser/my-campaigns" },
     { title: "Start New Campaign", icon: <FaPlusCircle />, path: "/fundraiser/create-campaign" },
-    { title: "Profile Settings", icon: <FaUser />, path: "/fundraiser/profile" },
+    { title: "Profile Settings", icon: <FaUser />, path: `/fundraiser/${id}/edit` },
     { title: "Logout", icon: <FaSignOutAlt />, path: "/login" },
   ];
 
@@ -34,7 +42,7 @@ function FundraiserSidebar() {
 
       {/* ===== PROFILE INFO ===== */}
       <div className="flex flex-col items-center mb-8">
-        <img className="w-20 h-20 rounded-full" src={dp?dp:"https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg"} alt="person" />
+        <img className='w-14 h-14 rounded-full' src={dp?`${serverURL}/uploads/${dp}`:"https://png.pngtree.com/png-vector/20211007/ourmid/pngtree-casual-stylish-fashionable-people-icon-in-flat-style-png-image_3974718.png"} alt="profile" />
         <h2 className="text-lg font-semibold text-gray-900">{username}</h2>
         <p className="text-sm text-gray-500">verified ✔️</p>
       </div>

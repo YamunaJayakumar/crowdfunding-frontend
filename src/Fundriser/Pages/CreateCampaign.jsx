@@ -1,11 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
-import { createCampaignAPI } from "../../services/allAPI";
+import { createCampaignAPI, editCampaignAPI } from "../../services/allAPI";
 
 function CreateCampaign() {
+  const{id}=useParams()
   const navigate = useNavigate();
   const [verified, setVerified] = useState(false);
+  useEffect(()=>{
+    if(id){
+      fetchCampaign()
+    }
+  },[])
   
   const [campaign, setCampaign] = useState({
     title: "",
@@ -23,6 +29,40 @@ function CreateCampaign() {
   console.log(campaign);
   
   const [previewDocs, setPreviewDocs] = useState([]); // optional preview
+  
+
+  const fetchCampaign=async()=>{
+     const token = sessionStorage.getItem("token");
+    const reqHeader = {
+      'Authorization': `Bearer ${token}`,
+    };
+      const result = await editCampaignAPI(id,reqHeader);
+      if(result.status==200){
+         setCampaign({
+        title: result.data.title,
+        category: result.data.category,
+        location: result.data.location,
+        beneficiary: result.data.beneficiary,
+        shortDescription: result.data.shortDescription,
+        longDescription: result.data.longDescription,
+        goalAmount: result.data.goalAmount,
+        minDonation: result.data.minDonation,
+        endDate: result.data.endDate?.slice(0, 10),
+        image: null,        // keep null unless user uploads new
+        documents: [],     // same here
+      });
+    }
+    else{
+      console.log(result)
+      toast.warning("something went wrong")
+        
+      
+
+      }
+
+
+  }
+  
 
   const handleDocumentUpload=(e)=>{
     const files=Array.from(e.target.files)
@@ -75,13 +115,15 @@ function CreateCampaign() {
           if(result.status === 200){
             toast.success("campaign created successfully")
             setTimeout(()=>{
-              navigate('/fundriser/dashboard')
+              navigate('/fundriser/my-campaigns')
+              
 
-            },25000)
+            },1000)
           }
           else if(result.status == 401){
             toast.warning(result.response.data)
           }
+          handleRestorm()
       }
       else{
         toast.error("something went wrong")
@@ -91,7 +133,22 @@ function CreateCampaign() {
     }
 
   }
+  const handleRestorm=()=>{
+    setCampaign({ title: "",
+    category: "",
+    location: "",
+    beneficiary: "",
+    shortDescription: "",
+    longDescription: "",
+    goalAmount: "",
+    minDonation: "",
+    endDate: "",
+    image: null,      // first file input
+    documents: [],})
+    setPreviewDocs("")
 
+
+  }
 
   return (
     <div className="min-h-screen  p-6 flex justify-center">
@@ -262,7 +319,7 @@ function CreateCampaign() {
           <div className="flex justify-end gap-4">
             <button
               type="button"
-              onClick={() => navigate("/fundriser/dashboard")}
+              onClick={() => navigate("/fundriser/my-campaigns")}
               className="border border-orange-500 text-orange-500 px-6 py-2 rounded-lg hover:bg-gray-50"
             >
               Cancel
