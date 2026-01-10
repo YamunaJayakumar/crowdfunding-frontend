@@ -19,6 +19,8 @@ import WithdrawalApproval from "./Admin/Pages/WithdrawalApproval"
 import AdminCampaignAnalytics from "./Admin/Pages/AdminCampaignAnalytics"
 import Pnf from "./components/Pnf"
 import AdminDonationhistory from "./Admin/Pages/AdminDonationhistory"
+import PaymentSuccess from "./User/Pages/PaymentSuccess"
+import PayementFailure from "./User/Pages/PayementFailure"
 
 
 
@@ -33,14 +35,16 @@ export default function App() {
       <Route path={'/login'} element={<Login/>}/>
       <Route path={'/register'} element={<Register/>}/>
       <Route path={'/campaign-details'} element={<CampaignDetails/>}/>
-      <Route path={'/view-campaign'} element={<ViewCampaign/>}/>
+      <Route path={'campaign/view/:id'} element={<ViewCampaign/>}/>
+      <Route path={'/user/payement-success'} element={<PaymentSuccess/>}/>
+      <Route path={'/user/payement-error'} element={<PayementFailure/>}/>
 
       <Route path={'/fundriser/dashboard'} element={<FundriserDashboard/>}/>
       <Route path={'/fundraiser/create-campaign'} element={<CreateCampaign/>}/>
       <Route path={'/fundraiser/campaign/:id/edit'} element={<CreateCampaign/>}/>
       <Route path={'/fundraiser/:id/edit'} element={<FundriserProfile/>}/>
       <Route path={'/fundriser/my-campaigns'} element={<FundriserMyCampaigns/>}/>
-      <Route path={'//fundraiser/campaign/:id/view'} element={<FundriserViewCampaign/>}/>
+      <Route path={'/fundraiser/campaign/:id/view'} element={<FundriserViewCampaign/>}/>
 
       <Route path={'/admin/dashboard'} element={<AdminDashBoard/>}/>
       <Route path={'/admin/profile'} element={<AdminProfile/>}/>

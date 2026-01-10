@@ -1,6 +1,26 @@
 import commonsAPI from "./commonsAPI.js";
 import serverURL from './serverURL.js'
 
+// -----------------unauthorised-----------------------------------------
+//get all active campaigns
+export const getAllActiveCampaignAPI= async ()=>{
+return await commonsAPI("GET",`${serverURL}/campaigns/acive/all`,{})
+}
+//get latest active camapigns
+export const getLatestActiveCampaignAPI= async ()=>{
+return await commonsAPI("GET",`${serverURL}/campaign/latest`,{})
+}
+//get a active Campaign
+export const viewActiveCampaignAPI= async (id)=>{
+return await commonsAPI("GET",`${serverURL}/campaign/view/${id}`,{})
+}
+//make donation
+export const makeDonationAPI= async (id,reqBody)=>{
+return await commonsAPI("POST",`${serverURL}/campaign/${id}/donate`,reqBody)
+}
+
+//------------------------------fundraiser------------------------------------------------------------------
+
 //register api-called bt auth when register btn clicked
 export const registerAPI= async (userDetails)=>{
 return await commonsAPI("POST",`${serverURL}/register`,userDetails)
@@ -41,4 +61,24 @@ export const deleteCampaignAPI=async(id,reqHeader)=>{
      return await commonsAPI("DELETE",`${serverURL}/fundraiser/${id}`,{},reqHeader)
      }
 
+// -----------------------------------admin--------------------------------------
+//admin-profile edit
+export const EditAdminProfileAPI=async(reqBody,reqHeader)=>{
+    return await commonsAPI("PUT",`${serverURL}/admin/profile/edit`,reqBody,reqHeader)
 
+}
+//get all campaign-admin
+export const getAllCampaignAPI=async(reqHeader)=>{
+    return await commonsAPI('GET', `${serverURL}/admin/campaign/all`,{},reqHeader)
+
+}
+//get all pending Campaign
+export const getPendingCampaignAPI=async(reqHeader)=>{
+    return await commonsAPI('GET', `${serverURL}/admin/campaign/pending`,{},reqHeader)
+
+}
+//approve campaign
+export const approveCampaignAPI=async(id,reqHeader)=>{
+    return await commonsAPI('PUT', `${serverURL}/admin/${id}/approve`,{},reqHeader)
+
+}

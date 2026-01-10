@@ -1,46 +1,73 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminHeader from '../Compontents/AdminHeader';
 import AdminSidebar from '../Compontents/AdminSidebar';
 import { FaCross } from 'react-icons/fa';
 import { CircleX, ClosedCaptionIcon } from 'lucide-react';
+import { ToastContainer, toast } from 'react-toastify';
+import { approveCampaignAPI, getPendingCampaignAPI } from '../../services/allAPI';
+import serverURL from '../../services/serverURL';
 
 function FundriserApproval() {
+    const [campaigns,setCampaigns]=useState()
     const [selectedCampaign, setSelectedCampaign] = useState(null);
-    const campaigns = [
-        {
-            id: 1,
-            title: "Medical Help for Ravi",
-            organizer: "Ravi Kumar",
-            beneficiary: "Ravi Kumar",
-            image: "https://images.unsplash.com/photo-1578496781985-452d4a934d50",
-            category: "Medical",
-            target: "₹2,00,000",
-            raised: "₹45,000",
-            minDonation: "₹100",
-            startDate: "2026-01-04",
-            story:
-                "Ravi needs funds for an urgent surgery. Your support will cover hospital bills and post-surgery care.",
-            documents: [
-                { name: "Medical Report", url: "/docs/medical-report.pdf" },
-                { name: "Hospital Bill", url: "/docs/bill.jpg" },
-            ],
-        },
-        {
-            id: 2,
-            title: "School Supplies for Kids",
-            organizer: "Anita Sharma",
-            beneficiary: "Local School",
-            category: "Education",
-            target: "₹50,000",
-            raised: "₹10,000",
-            minDonation: "₹50",
-            startDate: "2026-01-02",
-            story: "Help provide stationery and books for underprivileged children.",
-            documents: [
-                { name: "School Letter", url: "/docs/school-letter.pdf" },
-            ],
-        },
-    ];
+   
+    useEffect(()=>{
+        fetchPendingCampaign()
+    },[])
+    
+
+    const fetchPendingCampaign=async()=>{
+        const token=sessionStorage.getItem("token")
+        const reqHeader ={
+            'Authorization':`Bearer ${token}`
+        }
+        try{
+            const result =await getPendingCampaignAPI(reqHeader)
+            console.log(result.data)
+            if(result.status==200){
+                setCampaigns(result.data)
+            }
+            else{
+                toast.warning("fetching campaign failed")
+            }
+
+        }catch(err){
+            console.log(err)
+            toast.warning("something went wrong")
+
+        }
+
+
+
+    }
+
+    const apporveCamapign =async(id)=>{
+        const token=sessionStorage.getItem("token")
+        const reqHeader ={
+            'Authorization':`Bearer ${token}`
+        }
+        try{
+            const result=await approveCampaignAPI(id,reqHeader)
+            if(result.status ==200){
+                toast.success("campaign approved")
+                //remove the approved campaign
+                setCampaigns(prev =>
+        prev.filter(campaign => campaign._id !== id)
+      );
+            }
+            else{
+                console.log(result.data)
+                toast.error("approval failed")
+            }
+        }catch(err){
+            console.log(err)
+            toast.warning("something went wrong")
+        }
+
+
+    }
+
+    
 
 
     return (
@@ -55,7 +82,8 @@ function FundriserApproval() {
 
                     {/* Campaign Cards */}
                     <div className="grid gap-4">
-                        {campaigns.map((campaign, index) => (
+                        {campaigns?.length>0?
+                        campaigns.map((campaign, index) =>(
                             <div
                                 key={index}
                                 className="bg-white p-4 rounded-xl shadow flex justify-between items-center"
@@ -65,10 +93,10 @@ function FundriserApproval() {
                                     <p className="text-gray-500 text-sm">{campaign.category}</p>
                                     
                                     <p className="text-gray-600 text-sm">
-                                        <span className="font-semibold">Target:</span> {campaign.target}
+                                        <span className="font-semibold">Target:</span> {campaign.goalAmount}
                                     </p>
                                     <p className="text-gray-500 text-sm">
-                                        <span className="font-semibold">Created On:</span> {campaign.startDate}
+                                        <span className="font-semibold">Created On:</span> {campaign.createdAt}
                                     </p>
                                 </div>
                                 <div className="flex gap-2">
@@ -78,7 +106,7 @@ function FundriserApproval() {
                                     >
                                         View
                                     </button>
-                                    <button
+                                    <button onClick={()=>apporveCamapign(campaign._id)}
 
                                         className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
                                     >
@@ -86,7 +114,8 @@ function FundriserApproval() {
                                     </button>
                                 </div>
                             </div>
-                        ))}
+                        )): <p>loading....</p>
+                        }
                     </div>
                     {/* Modal */}
                     {selectedCampaign && (
@@ -105,7 +134,7 @@ function FundriserApproval() {
                                 </p>
                                 {/* Main Image */}
                                     <img
-                                        src={selectedCampaign.image}
+                                        src={`${serverURL}/uploads/${selectedCampaign.image}`}
                                         alt="Campaign"
                                         className="w-100 h-50 rounded-xl  object-cover"
                                     />
@@ -116,13 +145,13 @@ function FundriserApproval() {
                                     <span className="font-semibold">Category:</span> {selectedCampaign.category}
                                 </p>
                                 <p className="text-gray-600 mb-1">
-                                    <span className="font-semibold">Target:</span> {selectedCampaign.target}
+                                    <span className="font-semibold">Target:</span> {selectedCampaign.goalAmount}
                                 </p>
 
 
                                 <div className="mb-4">
                                     <p className="font-semibold mb-1">Story:</p>
-                                    <p className="text-gray-600">{selectedCampaign.story}</p>
+                                    <p className="text-gray-600">{selectedCampaign.longDescription}</p>
                                 </div>
 
                                 {selectedCampaign.documents?.length > 0 && (
@@ -132,12 +161,12 @@ function FundriserApproval() {
                                             {selectedCampaign.documents.map((doc, idx) => (
                                                 <li key={idx}>
                                                     <a
-                                                        href={doc.url}
+                                                        href={`${serverURL}/uploads/${doc}`}
                                                         target="_blank"
                                                         rel="noreferrer"
                                                         className="text-blue-600 underline"
                                                     >
-                                                        {doc.name}
+                                                        {doc}
                                                     </a>
                                                 </li>
                                             ))}
@@ -149,6 +178,11 @@ function FundriserApproval() {
                     )}
                 </div>
             </div>
+            <ToastContainer
+                                        position="top-center"
+                                        autoClose={3000}
+                                        theme="colored"
+                                      />
         </div>
 
     );

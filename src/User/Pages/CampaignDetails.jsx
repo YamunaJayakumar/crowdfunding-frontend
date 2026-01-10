@@ -56,16 +56,10 @@ function CampaignDetails() {
       </div>
 
       {/* CAMPAIGN GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
         <CampaignCard />
-        <CampaignCard />
-        <CampaignCard />
-        <CampaignCard />
-        <CampaignCard />
-        <CampaignCard />
-        <CampaignCard />
-      </div>
-
+        
+     
       {/* FOOTER TAGLINE */}
       <div className="text-center mt-12 text-gray-500">
         <Clock className="mx-auto mb-2" />

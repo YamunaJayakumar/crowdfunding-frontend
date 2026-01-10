@@ -58,7 +58,7 @@ function FundriserViewCampaign() {
         {/* Back Button */}
         <Link
           to="/fundriser/my-campaigns"
-          className="inline-flex items-center gap-2 text-gray-600 font-medium"
+          className="inline-flex items-center gap-2 text-gray-600 font-medium px-4 py-3 border border-gray-500"
         >
           <FaArrowRight className="rotate-180" /> Back
         </Link>

@@ -1,154 +1,153 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaAddressCard, FaPowerOff } from 'react-icons/fa';
-import { SiSession } from 'react-icons/si';
 import { Link, useNavigate } from 'react-router-dom';
-import serverURL from '../services/serverURL'
-function Navbar() {
-  const [token, setToken] = useState()
-  const [dropDown, setDropDown] = useState(false)
-   const[dp,setDp]=useState()
-  const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-  console.log(dp)
+import serverURL from '../services/serverURL';
 
+function Navbar() {
+  const [token, setToken] = useState(null)
+  const [dropDown, setDropDown] = useState(false)
+  const [dp, setDp] = useState(null)
+  const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (sessionStorage.getItem("token")) {
-      const userToken = sessionStorage.getItem("token")
+    const userToken = sessionStorage.getItem("token")
+    const userData = sessionStorage.getItem("user")
 
+    if (userToken && userData) {
       setToken(userToken)
-      
-      const user = JSON.parse(sessionStorage.getItem("user"))
-      setDp(user.picture)
-
-
-
-
+      setDp(JSON.parse(userData).picture)
     }
+  }, [])
 
-  }, [token])
+  const handleLogout = () => {
+    sessionStorage.clear()
+    setToken(null)
+    setDp(null)
+    setDropDown(false)
+    navigate('/login')
+  }
+
+  const profileImage = dp
+    ? `${serverURL}/uploads/${dp}`
+    : "https://png.pngtree.com/png-vector/20211007/ourmid/pngtree-casual-stylish-fashionable-people-icon-in-flat-style-png-image_3974718.png"
 
   return (
-    <nav className="w-full fixed top-0 z-50 bg-gray-50 py-3 shadow-sm md:shadow-none">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+    <nav className="fixed top-0 z-50 w-full bg-gray-50 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
-        {/* Logo Section */}
-        <div
-          className="flex items-center cursor-pointer"
-          onClick={() => navigate('/')}
-        >
-          <img width="40" src="/log2-removebg-preview.png" alt="logo" />
-          <span className="text-xl md:text-2xl font-extrabold text-gray-700">
-            <sub> KindHeart</sub>
+        {/* Logo */}
+        <div onClick={() => navigate('/')} className="flex items-center cursor-pointer">
+          <img src="/log2-removebg-preview.png" alt="logo" className="w-10" />
+          <span className="text-xl font-extrabold text-gray-700 ms-1">
+            <sub>KindHeart</sub>
           </span>
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-          <li className="hover:text-orange-600 transition cursor-pointer">Home</li>
-          <li className="hover:text-orange-600 transition cursor-pointer">Campaigns</li>
-          <li className="hover:text-orange-600 transition cursor-pointer">Reviews</li>
-          <li className="hover:text-orange-600 transition cursor-pointer">Who we are</li>
+        <ul className="hidden md:flex gap-8 text-gray-700 font-medium">
+          {["Home", "Campaigns", "Reviews", "Who we are"].map(item => (
+            <li key={item} className="hover:text-orange-600 cursor-pointer">
+              {item}
+            </li>
+          ))}
         </ul>
 
-        {/* Desktop Buttons */}
+        {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
           <button
-            onClick={(token) => !token ? navigate('/login') : navigate('/fundraiser/create-campaign')}
-            className=" bg-linear-to-br from-orange-400 to-orange-600 text-white px-4 py-2 rounded-md text-sm hover:bg-orange-700 transition"
+            onClick={() =>
+              token
+                ? navigate('/fundraiser/create-campaign')
+                : navigate('/login')
+            }
+            className="bg-linear-to-br from-orange-400 to-orange-600 text-white px-4 py-2 rounded-md text-sm"
           >
             Start Campaign
           </button>
 
-          {
-            !token ?
-              <Link to="/login">
-                <button className="border border-orange-600 text-orange-600 px-4 py-2 rounded-md text-sm hover:bg-orange-600 hover:text-white transition">
-                  Login
-                </button>
-              </Link>
-              :
-              // profile &dropdown
-              <div className="relative inline-block text-left ms-2">
-                <button onClick={()=>setDropDown(!dropDown)} className="w-full bg-white px-3 py-2 shadow-xs  rounded-full hover:bg-gray-200">
-                <img className='w-14 h-14 rounded-full' src={dp?`${serverURL}/uploads/${dp}`:"https://png.pngtree.com/png-vector/20211007/ourmid/pngtree-casual-stylish-fashionable-people-icon-in-flat-style-png-image_3974718.png"} alt="profile" />
-               </button>
-                {/* dropdown */}
-                {
-                dropDown &&
-                  <div className="absolute right-0 z-50 mt-2 w-40 rounded-md bg-white shadow-lg origin-top-right ring-1 ring-black/5 focus:outline-hidden ">
-                  <Link to={'/fundriser/dashboard'} className='px-4 py-2 text-sm text-gray-700 flex items-center'>
-                    <FaAddressCard className='me-2' />dashboard
+          {!token ? (
+            <Link to="/login">
+              <button className="border border-orange-600 text-orange-600 px-4 py-2 rounded-md text-sm">
+                Login
+              </button>
+            </Link>
+          ) : (
+            <div className="relative">
+              <button
+                onClick={() => setDropDown(!dropDown)}
+                className="rounded-full p-1 hover:bg-gray-200"
+              >
+                <img src={profileImage} className="w-10 h-10 rounded-full" />
+              </button>
+
+              {dropDown && (
+                <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg">
+                  <Link
+                    to="/fundriser/dashboard"
+                    className="flex items-center px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    <FaAddressCard className="me-2" /> Dashboard
                   </Link>
-                  <button  className='px-4 py-2 text-sm text-gray-700 flex items-center'>
-                    <FaPowerOff className='me-2' />Logout
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    <FaPowerOff className="me-2" /> Logout
                   </button>
                 </div>
-                }
-              </div>
-          }
+              )}
+            </div>
+          )}
         </div>
 
-        {/* Mobile Menu Icon */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-3xl p-2 rounded-md hover:bg-gray-100"
-        >
+        {/* Mobile Menu Button */}
+        <button onClick={() => setOpen(!open)} className="md:hidden text-3xl">
           <AiOutlineMenu />
         </button>
       </div>
 
-      {/* Mobile Menu (Slide Down) */}
-      <div
-        className={`md:hidden bg-white flex flex-col items-center transition-all duration-300 ${open ? "max-h-96 py-5 shadow-md" : "max-h-0"
-          }`}
-      >
-        <ul className="text-gray-700 font-medium text-center space-y-4">
-          <li className="hover:text-orange-600 cursor-pointer">Home</li>
-          <li className="hover:text-orange-600 cursor-pointer">Campaigns</li>
-          <li className="hover:text-orange-600 cursor-pointer">How it works</li>
-          <li className="hover:text-orange-600 cursor-pointer">Who we are</li>
-        </ul>
+      {/* Mobile Menu */}
+      {open && (
+        <div className="md:hidden bg-white px-6 py-4 space-y-4 shadow-md">
+          <ul className="text-center space-y-3 text-gray-700">
+            {["Home", "Campaigns", "How it works", "Who we are"].map(item => (
+              <li key={item} className="hover:text-orange-600 cursor-pointer">
+                {item}
+              </li>
+            ))}
+          </ul>
 
-        <div className="flex flex-col gap-3 w-full px-10 mt-4">
           <button
-            onClick={(token) => !token ? navigate('/login') : navigate('/fundraiser/create-campaign')}
-            className="w-full bg-linear-to-br from-orange-400 to-orange-600 text-white py-2 rounded-md hover:bg-orange-700 transition"
+            onClick={() =>
+              token
+                ? navigate('/fundraiser/create-campaign')
+                : navigate('/login')
+            }
+            className="w-full bg-linear-to-br from-orange-400 to-orange-600 text-white py-2 rounded-md"
           >
             Start Campaign
           </button>
-          {
-            !token ?
-              <Link to="/login" className="w-full">
-                <button className="w-full border border-orange-600 text-orange-600 py-2 rounded-md hover:bg-orange-600 hover:text-white transition">
-                  Login
-                </button>
-              </Link> :
-              // profile &dropdown
-              <div className="relative inline-block text-left ms-2">
-                <button onClick={()=>setDropDown(!dropDown)}  className="w-full bg-white px-3 py-2 shadow-xs  rounded-2xl hover:bg-gray-200">
-                <img className='w-10 h-10 rounded-full' src={dp?`${serverURL}/uploads/${dp}`:"https://png.pngtree.com/png-vector/20211007/ourmid/pngtree-casual-stylish-fashionable-people-icon-in-flat-style-png-image_3974718.png"} alt="profile" />
-               </button>
-                {/* dropdown */}
-                {
-                dropDown &&
-                  <div className="absolute right-0 z-50 mt-2 w-40 rounded-md bg-white shadow-lg origin-top-right ring-1 ring-black/5 focus:outline-hidden">
-                  <Link to={'/fundriser/dashboard'} className='px-4 py-2 text-sm text-gray-700 flex items-center'>
-                    <FaAddressCard className='me-2' />dashboard
-                  </Link>
-                  <button  className='px-4 py-2 text-sm text-gray-700 flex items-center'>
-                    <FaPowerOff className='me-2' />Logout
-                  </button>
-                </div>
-                }
-              </div>
-          }
 
+          {!token ? (
+            <Link to="/login">
+              <button className="w-full border border-orange-600 text-orange-600 py-2 rounded-md">
+                Login
+              </button>
+            </Link>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="w-full border border-gray-300 py-2 rounded-md flex items-center justify-center gap-2"
+            >
+              <FaPowerOff /> Logout
+            </button>
+          )}
         </div>
-      </div>
+      )}
     </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
