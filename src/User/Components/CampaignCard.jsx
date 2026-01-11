@@ -13,8 +13,11 @@ function CampaignCard() {
   }, [])
 
   const fetchActiveCampaigns = async () => {
+        const token = sessionStorage.getItem("token");
+        const authHeader =
+            { Authorization: `Bearer ${token}` }
     try {
-      const result = await getAllActiveCampaignAPI()
+      const result = await getAllActiveCampaignAPI(authHeader)
       if (result.status === 200) {
         setCampaignArray(result.data)
       } else {
@@ -89,7 +92,7 @@ function CampaignCard() {
 
                     <button
                       onClick={() => navigate(`/campaign/view/${item._id}`)}
-                      className="text-sm px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-gradient-to-r hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
+                      className="text-sm px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-linear-to-r hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
                     >
                       Donate
                     </button>

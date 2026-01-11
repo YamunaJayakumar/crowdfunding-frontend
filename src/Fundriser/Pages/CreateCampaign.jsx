@@ -7,6 +7,7 @@ function CreateCampaign() {
   const{id}=useParams()
   const navigate = useNavigate();
   const [verified, setVerified] = useState(false);
+  const[previewDocs,setPreviewDocs]=useState([])
   useEffect(()=>{
     if(id){
       fetchCampaign()
@@ -28,7 +29,7 @@ function CreateCampaign() {
   });
   console.log(campaign);
   
-  const [previewDocs, setPreviewDocs] = useState([]); // optional preview
+
   
 
   const fetchCampaign=async()=>{

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaTachometerAlt, FaPlusCircle, FaWallet, FaUser, FaSignOutAlt, FaFlag } from "react-icons/fa";
+import { FaTachometerAlt, FaPlusCircle, FaWallet, FaUser, FaSignOutAlt, FaFlag, FaClock } from "react-icons/fa";
 import serverURL from '../../services/serverURL'
 import { useNavigate } from "react-router-dom";
 
@@ -38,6 +38,7 @@ function FundraiserSidebar() {
     { title: "Dashboard", icon: <FaTachometerAlt />, path: "/fundriser/dashboard" },
     { title: "My Campaigns", icon: <FaFlag />, path: "/fundriser/my-campaigns" },
     { title: "Start New Campaign", icon: <FaPlusCircle />, path: "/fundraiser/create-campaign" },
+    { title: "My Withdrawals", icon: <FaClock />, path: "/fundraiser/withdrawals" },
     { title: "Profile Settings", icon: <FaUser />, path: `/fundraiser/${id}/edit` },
     
   ];

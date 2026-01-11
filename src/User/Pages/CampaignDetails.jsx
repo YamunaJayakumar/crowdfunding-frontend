@@ -1,11 +1,19 @@
 import React from "react";
 import { Search, Filter, Layers, TrendingUp, Clock } from "lucide-react";
 import CampaignCard from "../Components/CampaignCard";
+import { Link } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa";
+
 
 function CampaignDetails() {
   return (
     <div className="min-h-screen bg-white p-6">
-      
+       <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-gray-600 font-medium px-4 py-2 rounded-lg"
+        >
+          <FaArrowRight className="rotate-180" /> Back
+        </Link>
       {/* TOP HERO SECTION */}
       <header className="bg-linear-to-r from-orange-400 to-orange-600 rounded-2xl p-8 mb-8 text-white shadow-lg">
         <h1 className="text-4xl font-bold drop-shadow-sm">Explore Campaigns</h1>

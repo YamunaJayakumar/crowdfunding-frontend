@@ -17,16 +17,21 @@ function Home() {
   useEffect(() => {
     handleLatestCampaign()
   }, [])
-
+  const token = sessionStorage.getItem("token");
   const handleLatestCampaign = async () => {
+    // or wherever you store it
+    const reqHeader = {
+      'Authorization': `Bearer ${token}`
+    }
+
     try {
-      const result = await getLatestActiveCampaignAPI()
+      const result = await getLatestActiveCampaignAPI(reqHeader)
       if (result.status == 200) {
         setLatestCampaign(result.data)
       }
       else {
         console.log(result)
-        toast.error("something went wrong")
+
       }
 
     } catch (err) {
@@ -75,18 +80,19 @@ function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 px-4">
           {latestCamapign?.length > 0 ? (
             latestCamapign.map((item) => {
-              const progress = Math.min(
-                (item.totalRaised / item.goalAmount) * 100,
-                100
-              );
+              // const progress = Math.min(
+              //   (item.totalRaised / item.goalAmount) * 100,
+              //   100
+              // );
 
               return (
                 <div
                   key={item._id}
-                  className="relative bg-white rounded-3xl shadow-lg overflow-hidden"
+                  className="relative bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col h-full"
                 >
+                  {/* IMAGE */}
                   <img
-                    className="w-full h-48 object-cover rounded-t-3xl"
+                    className="w-full h-48 object-cover"
                     src={`${serverURL}/uploads/${item?.image}`}
                     alt="fundraiser"
                   />
@@ -95,71 +101,76 @@ function Home() {
                     {item.category}
                   </span>
 
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900">
+                  {/* CONTENT */}
+                  <div className="p-6 flex flex-col flex-1">
+                    {/* TITLE */}
+                    <h3 className="text-xl font-semibold text-gray-900 line-clamp-2 min-h-14">
                       {item.title}
                     </h3>
 
-                    <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+                    {/* DESCRIPTION */}
+                    <p className="text-gray-600 text-sm mt-2 line-clamp-2 min-h-10">
                       {item.shortDescription}
                     </p>
 
                     {/* PROGRESS */}
                     <div className="mt-4">
                       <div className="flex justify-between text-xs text-gray-500 mb-1">
-                        <span>
-                          <FaDollarSign className="inline" />
-                          {item.totalRaised.toLocaleString()} Raised
-                        </span>
-                        <span>
-                          <FaDollarSign className="inline" />
-                          {item.goalAmount.toLocaleString()} Goal
-                        </span>
+                        <span>₹{item.totalRaised.toLocaleString()} Raised</span>
+                        <span>₹{item.goalAmount.toLocaleString()} Goal</span>
                       </div>
 
                       <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                         <div
-                          className="bg-linear-to-br from-orange-400 to-orange-600 h-2 rounded-full transition-all duration-500"
-                          style={{ width: `${Math.min((item.totalRaised || 0) / (item.goalAmount || 1) * 100, 100)}%` }}
+                          className="bg-linear-to-br from-orange-400 to-orange-600 h-2"
+                          style={{
+                            width: `${Math.min(
+                              ((item.totalRaised || 0) / (item.goalAmount || 1)) * 100,
+                              100
+                            )}%`,
+                          }}
                         />
                       </div>
-
-                      {item.totalRaised >= item.goalAmount.toLocaleString() && (
-                        <p className="text-xs text-green-600 mt-1 font-semibold">
-                          Goal Reached
-                        </p>
-                      )}
                     </div>
 
-
-                    {/* ACTION */}
-                    <div className="flex justify-between items-center mt-6">
+                    {/* ACTION – PUSHED TO BOTTOM */}
+                    <div className="mt-auto pt-6">
                       <button
                         onClick={() => navigate(`/campaign/view/${item._id}`)}
-                        className="border border-orange-600 text-orange-600 px-4 py-2 rounded-md text-sm hover:bg-linear-to-br hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
+                        className="w-full bg-linear-to-br from-orange-400 to-orange-600 text-white px-4 py-2 px-4 rounded-lg"
                       >
                         Donate
                       </button>
                     </div>
                   </div>
                 </div>
+
               );
             })
           ) : (
             <p className="text-center col-span-4 text-gray-500">
-              Loading campaigns...
+             With a focus on transparency, trust, and accessibility, we ensure that every campaign is verified and every donor can track their impact.
             </p>
           )}
         </div>
 
         {/* VIEW ALL BUTTON */}
         <div className="flex justify-center mt-14">
-          <button
-            onClick={() => navigate("/campaign-details")}
-            className="px-8 py-3 text-orange-600 border border-orange-600 rounded-lg hover:bg-linear-to-br hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
-          >
-            View All Campaigns
-          </button>
+          {token ? (
+            <button
+              onClick={() => navigate('/campaigns/acive/all')}
+              className="px-8 py-3 text-orange-600 border border-orange-600 rounded-lg hover:bg-linear-to-br hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
+            >
+              view All camapaigns
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate("/login")}
+              className="px-8 py-3 text-orange-600 border  rounded-lg bg-linear-to-br hover:from-orange-400 hover:to-orange-600 hover:text-white transition"
+            >
+               View Campaigns
+            </button>
+          )}
         </div>
       </section>
 

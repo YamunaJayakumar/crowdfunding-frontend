@@ -52,7 +52,7 @@ function AdminCampaignAnalytics() {
         <div className="col-span-3 bg-white rounded-2xl shadow-sm  my-6 "style={{marginLeft:'-5rem',marginRight:'3rem'}}>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
-              <thead className="bg-orange-50 sticky top-0 z-10">
+              <thead className="bg-gray-100 text-gray-700 text-sm">
                 <tr className="text-left text-gray-700 font-semibold">
                   <th className="p-4">Title</th>
                   <th className="p-4">Fundraiser</th>

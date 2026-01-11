@@ -15,8 +15,19 @@ function ViewCampaign() {
     name: "", email: "", phone: "", city: "", state: ""
   });
   const [showReportModal, setShowReportModal] = useState(false);
-
-  useEffect(() => { fetchCampaign() }, []);
+  const token = sessionStorage.getItem("token");
+  
+  const [userInfo, setUserInfo] = useState({ name: "", email: "" });
+  useEffect(() => {
+    if (token) {
+     const user =JSON.parse(sessionStorage.getItem("user"))
+      const storedName = user.username
+      const storedEmail = user.email
+      setUserInfo({ name: storedName, email: storedEmail });
+      setBillingInfo({ ...billingInfo, name: storedName, email: storedEmail });
+    }
+    fetchCampaign()
+  }, []);
 
   const fetchCampaign = async () => {
     try {
@@ -63,7 +74,7 @@ function ViewCampaign() {
 
         {/* Back Button */}
         <Link
-          to="/campaign-details"
+          to="/campaigns/acive/all"
           className="inline-flex items-center gap-2 text-gray-600 font-medium border border-gray-500 px-4 py-2 rounded-lg"
         >
           <FaArrowRight className="rotate-180" /> Back
@@ -99,7 +110,7 @@ function ViewCampaign() {
               style={{ width: `${Math.max(progress, 3)}%` }}
             ></div>
           </div>
-          <p className="text-right text-sm text-orange-600 font-semibold">{ `${Math.max(progress.toLocaleString(), 3)}`}% of goal reached</p>
+          <p className="text-right text-sm text-orange-600 font-semibold">{`${Math.max(progress.toLocaleString(), 3)}`}% of goal reached</p>
 
           {/* Billing Info */}
           <div className="space-y-2">
@@ -119,13 +130,13 @@ function ViewCampaign() {
           <div>
             <label className="text-sm font-medium text-gray-600">Enter Amount</label>
             <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-3 py-2 mt-1">
-              <span className="font-bold">$</span>
+              <span className="font-bold">₹</span>
               <input type="number" placeholder="1000" className="w-full outline-none"
                 value={amount} onChange={(e) => setAmount(e.target.value)} />
             </div>
           </div>
 
-          
+
 
           {/* Donate Button */}
           <button
@@ -138,7 +149,7 @@ function ViewCampaign() {
 
         </div>
 
-      <ToastContainer position="top-center" autoClose={3000} theme="colored" />
+        <ToastContainer position="top-center" autoClose={3000} theme="colored" />
       </div>
     </div>
   );

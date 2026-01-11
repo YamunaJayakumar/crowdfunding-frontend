@@ -3,12 +3,12 @@ import serverURL from './serverURL.js'
 
 // -----------------unauthorised-----------------------------------------
 //get all active campaigns
-export const getAllActiveCampaignAPI= async ()=>{
-return await commonsAPI("GET",`${serverURL}/campaigns/acive/all`,{})
+export const getAllActiveCampaignAPI= async (reqHeader)=>{
+return await commonsAPI("GET",`${serverURL}/campaigns/acive/all`,{},reqHeader)
 }
 //get latest active camapigns
-export const getLatestActiveCampaignAPI= async ()=>{
-return await commonsAPI("GET",`${serverURL}/campaign/latest`,{})
+export const getLatestActiveCampaignAPI= async (reqHeader)=>{
+return await commonsAPI("GET",`${serverURL}/campaign/latest`,{},reqHeader)
 }
 //get a active Campaign
 export const viewActiveCampaignAPI= async (id)=>{
@@ -60,7 +60,16 @@ export const editCampaignAPI=async(id,reqHeader)=>{
 export const deleteCampaignAPI=async(id,reqHeader)=>{
      return await commonsAPI("DELETE",`${serverURL}/fundraiser/${id}`,{},reqHeader)
      }
+//request withdrawal
+export const requestWithdrawalAPI=async(id,reqBody,reqHeader)=>{
+    return await commonsAPI("post",`${serverURL}/withdraw/${id}/request`,reqBody,reqHeader)
 
+}
+//withdrawal status
+export const WithdrawalHistoryAPI=async(id,reqHeader)=>{
+    return await commonsAPI("get",`${serverURL}/${id}/withdrawal/history`,{},reqHeader)
+
+}
 // -----------------------------------admin--------------------------------------
 //admin-profile edit
 export const EditAdminProfileAPI=async(reqBody,reqHeader)=>{
@@ -80,5 +89,21 @@ export const getPendingCampaignAPI=async(reqHeader)=>{
 //approve campaign
 export const approveCampaignAPI=async(id,reqHeader)=>{
     return await commonsAPI('PUT', `${serverURL}/admin/${id}/approve`,{},reqHeader)
+
+}
+//get donation history
+export const getDonationHistoryAPI=async(reqHeader)=>{
+    return await commonsAPI("GET",`${serverURL}/admin/donations/history`,{},reqHeader)
+
+}
+
+//get all withdrwal request
+export const getallWithdrawalAPI=async(reqHeader)=>{
+    return await commonsAPI("GET",`${serverURL}/admin/withdrawal/all`,{},reqHeader)
+
+}
+//approve withdrawal
+export const approveWithdrwalAPI=async(id,reqBody,reqHeader)=>{
+    return await commonsAPI("PUT",`${serverURL}/admin/withdarwal/${id}/approve`,reqBody,reqHeader)
 
 }

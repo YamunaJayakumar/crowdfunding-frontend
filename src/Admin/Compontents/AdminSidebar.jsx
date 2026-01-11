@@ -34,13 +34,14 @@ function AdminSidebar() {
         { title: "Dashboard", icon: <FaTachometerAlt />, path: "/admin/dashboard" },
         { title: "Campaign Analytics", icon: <BsGraphUp />, path: "/admin/campaign-analytics" },
         { title: "Campaign Approval", icon: <FaFlag />, path: "/admin/fund-approval" },
-        { title: "Donation History", icon: <FaClock />, path: "/admin/donation-history" },
+        { title: "Donation History", icon: <FaClock />, path: '/admin/donations/history' },
         { title: "Withdrawal Approvals", icon: <FaMoneyBillTransfer />, path: "/admin/withdrawal-approval" },
         { title: "Profile Settings", icon: <FaUser />, path: "/admin/profile" },
     ];
 
     return (
-        <aside className="w-66 bg-white p-6 shadow min-h-screen flex flex-col justify-start gap-10   ">
+        <aside className="w-66 bg-white p-6 shadow h-screen sticky top-0 flex flex-col justify-between">
+
             {/* profile info */}
             <div className='flex flex-col items-center mb-8 mt-4'>
 
