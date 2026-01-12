@@ -146,7 +146,7 @@ function CreateCampaign() {
     endDate: "",
     image: null,      // first file input
     documents: [],})
-    setPreviewDocs("")
+    setPreviewDocs([])
 
 
   }

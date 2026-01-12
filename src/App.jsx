@@ -21,6 +21,7 @@ import Pnf from "./components/Pnf"
 import AdminDonationhistory from "./Admin/Pages/AdminDonationhistory"
 import PaymentSuccess from "./User/Pages/PaymentSuccess"
 import PayementFailure from "./User/Pages/PayementFailure"
+import MyDonations from "./Fundriser/Pages/MyDonations"
 // import Loader from "./components/Loader"
 
 
@@ -45,6 +46,7 @@ export default function App() {
       <Route path={'campaign/view/:id'} element={<ViewCampaign/>}/>
       <Route path={'/user/payement-success'} element={<PaymentSuccess/>}/>
       <Route path={'/user/payement-error'} element={<PayementFailure/>}/>
+      <Route path={'/user/:id'} element={<PayementFailure/>}/>
 
       <Route path={'/fundriser/dashboard'} element={<FundriserDashboard/>}/>
       <Route path={'/fundraiser/create-campaign'} element={<CreateCampaign/>}/>
@@ -53,6 +55,7 @@ export default function App() {
       <Route path={'/fundriser/my-campaigns'} element={<FundriserMyCampaigns/>}/>
       <Route path={'/fundraiser/campaign/:id/view'} element={<FundriserViewCampaign/>}/>
       <Route path={'/fundraiser/withdrawals'} element={<MyWithdrawals/>}/>
+
 
 
       <Route path={'/admin/dashboard'} element={<AdminDashBoard/>}/>

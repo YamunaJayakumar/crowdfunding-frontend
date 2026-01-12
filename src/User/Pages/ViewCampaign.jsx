@@ -30,7 +30,7 @@ function ViewCampaign() {
   }, []);
 
   const fetchCampaign = async () => {
-    try {
+  try{
       const result = await viewActiveCampaignAPI(id);
       if (result.status === 200) setCampaign(result.data);
       else toast.warning("Campaign does not exist");
@@ -41,6 +41,7 @@ function ViewCampaign() {
   };
 
   const makePayment = async () => {
+    const token=sessionStorage.getItem("token")
     if (!amount || parseFloat(amount) <= 0) {
       toast.error("Enter a valid donation amount");
       return;
@@ -54,14 +55,22 @@ function ViewCampaign() {
       donorEmail: billingInfo.email,
       isAnonymous: false,
     };
+     const reqHeader = {
+      'Authorization': `Bearer ${token}`
+    }
 
     try {
-      const result = await makeDonationAPI(id, reqBody);
+    
+     
+      const result = await makeDonationAPI(id, reqBody,reqHeader);
       if (result.status === 200) {
         const { checkoutURL } = result.data;
         window.location.href = checkoutURL;
-      } else console.log(result);
-    } catch (err) { console.log(err); }
+      } 
+      else {console.log(result);}
+    }
+     catch (err)
+      { console.log(err); }
   };
 
   const progress = campaign ? Math.min((campaign.totalRaised / campaign.goalAmount) * 100, 100) : 0;

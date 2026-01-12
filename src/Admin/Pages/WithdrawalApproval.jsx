@@ -81,11 +81,12 @@ const handleApproval = async (id, action) => {
   const reqHeader = {
     Authorization: `Bearer ${token}`,
   };
-
+  
   try {
-    const result = await approveWithdrwalAPI(id, { action }, reqHeader);
+    const result = await approveWithdrwalAPI(id,{ action }, reqHeader);
 
     if (result.status === 200) {
+      
       toast.success(`Withdrawal ${action}`);
 
       
@@ -93,9 +94,12 @@ const handleApproval = async (id, action) => {
         prev.filter(item => item._id !== id)
       );
     }
+    else{
+      console.log(result)
+    }
   } catch (err) {
     console.log(err);
-    toast.error("failed");
+    toast.warning("failed");
   }
 };
   useEffect(()=>{

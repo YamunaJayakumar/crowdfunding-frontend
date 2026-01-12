@@ -15,8 +15,8 @@ export const viewActiveCampaignAPI= async (id)=>{
 return await commonsAPI("GET",`${serverURL}/campaign/view/${id}`,{})
 }
 //make donation
-export const makeDonationAPI= async (id,reqBody)=>{
-return await commonsAPI("POST",`${serverURL}/campaign/${id}/donate`,reqBody)
+export const makeDonationAPI= async (id,reqBody,reqHeader)=>{
+return await commonsAPI("POST",`${serverURL}/campaign/${id}/donate`,reqBody,reqHeader)
 }
 
 //------------------------------fundraiser------------------------------------------------------------------
@@ -104,6 +104,6 @@ export const getallWithdrawalAPI=async(reqHeader)=>{
 }
 //approve withdrawal
 export const approveWithdrwalAPI=async(id,reqBody,reqHeader)=>{
-    return await commonsAPI("PUT",`${serverURL}/admin/withdarwal/${id}/approve`,reqBody,reqHeader)
+    return await commonsAPI("PUT",`${serverURL}/admin/withdrawal/${id}/approve`,reqBody,reqHeader)
 
 }

@@ -96,7 +96,8 @@ function FundriserApproval() {
                                         <span className="font-semibold">Target:</span> {campaign.goalAmount}
                                     </p>
                                     <p className="text-gray-500 text-sm">
-                                        <span className="font-semibold">Created On:</span> {campaign.createdAt}
+                                        {/* //{new Date(campaign.createdAt).toLocaleDateString()} */}
+                                        <span className="font-semibold">Created On:</span> {new Date(campaign.createdAt).toLocaleDateString()} 
                                     </p>
                                 </div>
                                 <div className="flex gap-2">

@@ -15,7 +15,7 @@ function FundriserMyCampaigns() {
   const [campaigns, setCampaigns] = useState([]);
   const [openWithdrawModal, setOpenWithdrawModal] = useState(null);
   const [confirm, setConfirm] = useState(false);
-  const[sentrequest,setSendrequest]=useState(false)
+  const [sentrequest, setSendrequest] = useState(false)
 
   const [bankDetails, setBankDetails] = useState({
     accountHolderName: "",
@@ -23,13 +23,13 @@ function FundriserMyCampaigns() {
     ifscCode: "",
     bankName: ""
   });
-
+  // console.log(campaigns.item.status, campaigns.item.isWithdrawn);
   /* ----------------------------- Helpers ----------------------------- */
 
   const token = sessionStorage.getItem("token");
   const authHeader =
-     { Authorization: `Bearer ${token}` }
-   
+    { Authorization: `Bearer ${token}` }
+
 
   const resetModal = () => {
     setOpenWithdrawModal(null);
@@ -57,6 +57,7 @@ function FundriserMyCampaigns() {
         setCampaigns(res.data);
       }
     } catch (err) {
+      console.log(err)
       toast.error("Failed to load campaigns");
     }
   };
@@ -84,10 +85,16 @@ function FundriserMyCampaigns() {
       if (res.status === 200) {
         toast.success("Withdrawal request submitted");
         setSendrequest(true)
+        setCampaigns(prev =>
+          prev.map(c =>
+            c._id === id ? { ...c, isWithdrawn: true } : c
+          )
+        );
       } else {
         toast.warning("Something went wrong");
       }
     } catch (err) {
+      console.log(err)
       toast.error("Something went wrong");
     } finally {
       resetModal();
@@ -114,65 +121,105 @@ function FundriserMyCampaigns() {
             My Campaigns
           </h1>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {campaigns.map((item) => (
-              <div
-                key={item._id}
-                className="bg-white rounded-xl shadow-md p-5 space-y-4"
+          <div className="overflow-x-auto bg-white rounded-xl shadow-md">
+  <table className="w-full border-collapse">
+
+    {/* TABLE HEADER — ONLY ONCE */}
+    <thead className="bg-orange-100 text-orange-700">
+      <tr>
+        <th className="p-3 text-left">Title</th>
+        <th className="p-3 text-left">Status</th>
+        <th className="p-3 text-left">Raised</th>
+        <th className="p-3 text-left">Target</th>
+        <th className="p-3 text-center">Actions</th>
+      </tr>
+    </thead>
+
+    {/* TABLE BODY */}
+    <tbody>
+      {campaigns.map((item) => (
+        <tr
+          key={item._id}
+          className="border-b hover:bg-gray-50"
+        >
+          {/* Title */}
+          <td className="p-3 font-medium">
+            {item.title}
+          </td>
+
+          {/* Status */}
+          <td className="p-3">
+            <span
+              className={`text-xs px-3 py-1 rounded-full ${
+                item.status === "closed"
+                  ? "bg-red-100 text-red-700"
+                  : item.status === "active"
+                  ? "bg-green-100 text-green-700"
+                  : "bg-orange-100 text-orange-700"
+              }`}
+            >
+              {item.status}
+            </span>
+          </td>
+
+          {/* Raised */}
+          <td className="p-3">
+            ₹{item.totalRaised}
+          </td>
+
+          {/* Target */}
+          <td className="p-3">
+            ₹{item.goalAmount}
+          </td>
+
+          {/* Actions */}
+          <td className="p-3">
+            <div className="flex gap-2 justify-center">
+
+              {/* View */}
+              <Link
+                to={`/fundraiser/campaign/${item._id}/view`}
+                className="border border-orange-500 text-orange-500 px-3 py-1 rounded text-sm"
               >
-                <div className="flex justify-between items-center">
-                  <button
-                    onClick={() => deleteCampaign(item._id)}
-                    className="text-red-500"
-                  >
-                    <FaTrash />
-                  </button>
+                View
+              </Link>
 
-                  <span
-                    className={`text-xs px-3 py-1 rounded-full ${
-                      item.status === "closed"
-                        ? "bg-red-100 text-red-700"
-                        : item.status === "active"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-orange-100 text-orange-700"
-                    }`}
-                  >
-                    {item.status}
-                  </span>
-                </div>
+              {/* Withdraw */}
+              <button
+                className={`px-3 py-1 rounded text-sm text-white ${
+                  item.status === "closed" && !item.isWithdrawn
+                    ? "bg-orange-500"
+                    : "bg-gray-300 cursor-not-allowed"
+                }`}
+                disabled={item.status !== "closed" || item.isWithdrawn}
+                onClick={() => setOpenWithdrawModal(item._id)}
+              >
+                Withdraw
+              </button>
 
-                <h2 className="font-semibold">{item.title}</h2>
+              {/* Delete */}
+              <button
+                onClick={() => deleteCampaign(item._id)}
+                className="text-red-500"
+              >
+                <FaTrash />
+              </button>
 
-                <p className="text-sm">
-                  Raised: ₹<strong>{item.totalRaised}</strong>
-                </p>
-                <p className="text-sm">
-                  Target: ₹<strong>{item.goalAmount}</strong>
-                </p>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 
-                <div className="flex gap-2">
-                  <Link
-                    to={`/fundraiser/campaign/${item._id}/view`}
-                    className="flex-1 border border-orange-500 text-orange-500 py-2 rounded text-center"
-                  >
-                    View
-                  </Link>
+  {/* EMPTY STATE */}
+  {campaigns.length === 0 && (
+    <p className="text-center text-gray-500 py-6">
+      No campaigns found
+    </p>
+  )}
+</div>
 
-                  <button
-                    disabled={item.status !== "closed" || item.isWithdrawn ||  !sentrequest }
-                    onClick={() => setOpenWithdrawModal(item._id)}
-                    className={`flex-1 py-2 rounded text-white ${
-                      item.status === "closed" && !item.isWithdrawn  && sentrequest
-                        ? "bg-orange-500"
-                        : "bg-gray-300 cursor-not-allowed"
-                    }`}
-                  >
-                    Withdraw
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -227,7 +274,7 @@ function FundriserMyCampaigns() {
                 Cancel
               </button>
               <button
-                disabled={!confirm || !sentrequest }
+                disabled={!confirm}
                 onClick={() => submitWithdrawal(selectedCampaign._id)}
                 className="bg-orange-500 text-white px-4 py-2 rounded disabled:bg-gray-300"
               >

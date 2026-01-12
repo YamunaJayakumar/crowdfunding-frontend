@@ -186,7 +186,7 @@ function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             <img className="w-44 h-44 rounded-full object-cover grayscale hover:grayscale-0 transition" src="https://plus.unsplash.com/premium_photo-1683140538884-07fb31428ca6" alt="" />
             <img className="w-44 h-44 rounded-full object-contain" src="/log2-removebg-preview.png" alt="" />
-            <img className="w-44 h-44 rounded-full object-cover grayscale hover:grayscale-0 transition" src="https://c8.alamy.com/comp/F3GW1X/charity-people-from-city-giving-water-to-vari-pilgrim-at-pune-maharashtra-F3GW1X.jpg" alt="" />
+            <img className="w-44 h-44 rounded-full object-cover grayscale hover:grayscale-0 transition" src="https://plus.unsplash.com/premium_photo-1663054686094-fe0a3c749140?q=80&w=1170&auto=format&fit=crop"alt="" />
           </div>
         </div>
 

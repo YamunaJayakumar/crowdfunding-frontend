@@ -31,7 +31,7 @@ function PaymentSuccess() {
         {/* IMAGE SECTION */}
         <div className="flex justify-center">
           <img
-            src="https://www.architecturaldigest.in/wp-content/themes/cntraveller/images/check-circle.gif"
+            src="https://www.fininfocom.com/assets/img/check-circle.gif"
             alt="Payment Success"
             className="w-48 md:w-64"
           />
