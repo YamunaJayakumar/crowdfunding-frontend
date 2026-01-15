@@ -62,12 +62,17 @@ export const deleteCampaignAPI=async(id,reqHeader)=>{
      }
 //request withdrawal
 export const requestWithdrawalAPI=async(id,reqBody,reqHeader)=>{
-    return await commonsAPI("post",`${serverURL}/withdraw/${id}/request`,reqBody,reqHeader)
+    return await commonsAPI("POST",`${serverURL}/withdraw/${id}/request`,reqBody,reqHeader)
 
 }
 //withdrawal status
 export const WithdrawalHistoryAPI=async(id,reqHeader)=>{
-    return await commonsAPI("get",`${serverURL}/${id}/withdrawal/history`,{},reqHeader)
+    return await commonsAPI("GET",`${serverURL}/${id}/withdrawal/history`,{},reqHeader)
+
+}
+//mydonations
+export const MyDonationsAPI=async(reqHeader)=>{
+    return await commonsAPI("GET",`${serverURL}/donation/history`,{},reqHeader)
 
 }
 // -----------------------------------admin--------------------------------------

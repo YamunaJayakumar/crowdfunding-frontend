@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { Route, Routes } from "react-router-dom"
 import Home from './User/Pages/Home'
 
@@ -31,10 +31,7 @@ import MyDonations from "./Fundriser/Pages/MyDonations"
 
 
 export default function App() {
-  //  const [loading,setLoading]=useState(true)
-  // setTimeout(()=>{
-  //   setLoading(false)
-  // },3750)
+  
   return (
     <>
     <Routes>
@@ -47,6 +44,8 @@ export default function App() {
       <Route path={'/user/payement-success'} element={<PaymentSuccess/>}/>
       <Route path={'/user/payement-error'} element={<PayementFailure/>}/>
       <Route path={'/user/:id'} element={<PayementFailure/>}/>
+      <Route path={'/donation/history'} element={<MyDonations/>}/>
+    
 
       <Route path={'/fundriser/dashboard'} element={<FundriserDashboard/>}/>
       <Route path={'/fundraiser/create-campaign'} element={<CreateCampaign/>}/>
