@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 function AdminHeader() {
   return (
     <div><header>
@@ -11,7 +12,7 @@ function AdminHeader() {
         </div>
         {/* Welcome message */}
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Welcome back, Admin!</h1>
+          <h1 className="text-2xl font-semibold text-gray-900">Welcome back,<span className='text-orange-500'> Admin!</span></h1>
           <p className="text-sm text-gray-500">Manage your campaigns from here.</p>
         </div>
       </div>

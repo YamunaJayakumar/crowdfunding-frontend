@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function FundriserHeader() {
   
@@ -21,7 +22,7 @@ useEffect(()=>{
       <div className="flex items-center gap-3 px-7 py-6 bg-orange-100">
         {/* Logo placeholder */}
         <div className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl">
-          <img width={'100px'} src="/log2-removebg-preview.png" alt="" />
+          <Link to="/"><img width={'100px'} src="/log2-removebg-preview.png" alt="" /></Link>
         </div>
         {/* Welcome message */}
         <div>

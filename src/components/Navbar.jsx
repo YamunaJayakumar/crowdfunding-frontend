@@ -34,15 +34,19 @@ function Navbar() {
     : "https://png.pngtree.com/png-vector/20211007/ourmid/pngtree-casual-stylish-fashionable-people-icon-in-flat-style-png-image_3974718.png"
 
   return (
-    <nav className="fixed top-0 z-50 w-full bg-gray-50 shadow-sm">
+    <nav className="fixed top-0 z-50 w-full bg-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
 
         {/* Logo */}
         <div onClick={() => navigate('/')} className="flex items-center cursor-pointer">
-          <img src="/log2-removebg-preview.png" alt="logo" className="w-10" />
-          <span className="text-xl font-extrabold text-gray-700 ms-1">
-            <sub>KindHeart</sub>
-          </span>
+        <img
+              width={32}
+              src="/log2-removebg-preview.png"
+              alt="KindHeart Fund Logo"
+            />
+            <h4 className="text-2xl font-bold text-gray-800">
+              Kind<span className="text-orange-500">Heart</span>
+            </h4>
         </div>
 
         {/* Desktop Menu */}

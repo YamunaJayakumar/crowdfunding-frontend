@@ -22,6 +22,7 @@ import AdminDonationhistory from "./Admin/Pages/AdminDonationhistory"
 import PaymentSuccess from "./User/Pages/PaymentSuccess"
 import PayementFailure from "./User/Pages/PayementFailure"
 import MyDonations from "./Fundriser/Pages/MyDonations"
+import Footer from "./components/Footer"
 // import Loader from "./components/Loader"
 
 
@@ -31,42 +32,45 @@ import MyDonations from "./Fundriser/Pages/MyDonations"
 
 
 export default function App() {
-  
+
   return (
     <>
-    <Routes>
-      <Route path='/' element={<Home/>}/>
-      {/* <Route path={'/'} element={<Home/>}/> */}
-      <Route path={'/login'} element={<Login/>}/>
-      <Route path={'/register'} element={<Register/>}/>
-      <Route path={'/campaigns/acive/all'} element={<CampaignDetails/>}/>
-      <Route path={'campaign/view/:id'} element={<ViewCampaign/>}/>
-      <Route path={'/user/payement-success'} element={<PaymentSuccess/>}/>
-      <Route path={'/user/payement-error'} element={<PayementFailure/>}/>
-      <Route path={'/user/:id'} element={<PayementFailure/>}/>
-      <Route path={'/donation/history'} element={<MyDonations/>}/>
-    
-
-      <Route path={'/fundriser/dashboard'} element={<FundriserDashboard/>}/>
-      <Route path={'/fundraiser/create-campaign'} element={<CreateCampaign/>}/>
-      <Route path={'/fundraiser/campaign/:id/edit'} element={<CreateCampaign/>}/>
-      <Route path={'/fundraiser/:id/edit'} element={<FundriserProfile/>}/>
-      <Route path={'/fundriser/my-campaigns'} element={<FundriserMyCampaigns/>}/>
-      <Route path={'/fundraiser/campaign/:id/view'} element={<FundriserViewCampaign/>}/>
-      <Route path={'/fundraiser/withdrawals'} element={<MyWithdrawals/>}/>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        {/* <Route path={'/'} element={<Home/>}/> */}
+        <Route path={'/login'} element={<Login />} />
+        <Route path={'/register'} element={<Register />} />
+       
+          <Route path={'/campaigns/acive/all'} element={<CampaignDetails />} />
+      
+        <Route path={'campaign/view/:id'} element={<ViewCampaign />} />
+        <Route path={'/user/payement-success'} element={<PaymentSuccess />} />
+        <Route path={'/user/payement-error'} element={<PayementFailure />} />
+        <Route path={'/user/:id'} element={<PayementFailure />} />
+        <Route path={'/donation/history'} element={<MyDonations />} />
 
 
+        <Route path={'/fundriser/dashboard'} element={<FundriserDashboard />} />
+        <Route path={'/fundraiser/create-campaign'} element={<CreateCampaign />} />
+        <Route path={'/fundraiser/campaign/:id/edit'} element={<CreateCampaign />} />
+        <Route path={'/fundraiser/:id/edit'} element={<FundriserProfile />} />
+        <Route path={'/fundriser/my-campaigns'} element={<FundriserMyCampaigns />} />
+        <Route path={'/fundraiser/campaign/:id/view'} element={<FundriserViewCampaign />} />
+        <Route path={'/fundraiser/withdrawals'} element={<MyWithdrawals />} />
 
-      <Route path={'/admin/dashboard'} element={<AdminDashBoard/>}/>
-      <Route path={'/admin/profile'} element={<AdminProfile/>}/>
-      <Route path={'/admin/fund-approval'} element={<FundriserApproval/>}/>
-      <Route path={'/admin/withdrawal-approval'} element={<WithdrawalApproval/>}/>
-      <Route path={'/admin/campaign-analytics'} element={<AdminCampaignAnalytics/>}/>
-      <Route path={'/admin/donations/history'} element={<AdminDonationhistory/>}/>
 
-      <Route path={'/*'} element={<Pnf/>}/>
-    </Routes>
-    
+
+        <Route path={'/admin/dashboard'} element={<AdminDashBoard />} />
+        <Route path={'/admin/profile'} element={<AdminProfile />} />
+        <Route path={'/admin/fund-approval'} element={<FundriserApproval />} />
+        <Route path={'/admin/withdrawal-approval'} element={<WithdrawalApproval />} />
+        <Route path={'/admin/campaign-analytics'} element={<AdminCampaignAnalytics />} />
+        <Route path={'/admin/donations/history'} element={<AdminDonationhistory />} />
+
+        <Route path={'/*'} element={<Pnf />} />
+      </Routes>
+      <Footer/>
+
     </>
   )
 }

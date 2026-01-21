@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar'
 import Hero from '../Components/Hero'
 import { useNavigate } from 'react-router-dom'
-import Footer from '../../components/Footer'
+
 import Testimonials from '../Components/Testimonials'
 import AboutSection from '../Components/AboutSection'
 import { getLatestActiveCampaignAPI } from '../../services/allAPI'
 import { ToastContainer, toast } from 'react-toastify';
-import { FaDollarSign } from 'react-icons/fa'
+
 import serverURL from '../../services/serverURL'
 function Home() {
   const navigate = useNavigate();
@@ -208,7 +208,7 @@ function Home() {
       <section>
         <Testimonials />
       </section>
-      <Footer />
+      
       <ToastContainer position="top-center" autoClose={3000} theme="colored" />
     </div>
   )

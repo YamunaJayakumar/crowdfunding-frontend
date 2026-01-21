@@ -1,78 +1,58 @@
-import React from "react";
-import { Search, Filter, Layers, TrendingUp, Clock } from "lucide-react";
+import React, { useContext } from "react";
+import { Search, Clock } from "lucide-react";
 import CampaignCard from "../Components/CampaignCard";
 import { Link } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
-
+import { FaArrowLeft } from "react-icons/fa";
+import { CampaignFilterContext } from "../../context/CampaignFilterContext";
 
 function CampaignDetails() {
-  return (
-    <div className="min-h-screen bg-white p-6">
-       <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-gray-600 font-medium px-4 py-2 rounded-lg"
-        >
-          <FaArrowRight className="rotate-180" /> Back
-        </Link>
-      {/* TOP HERO SECTION */}
-      <header className="bg-linear-to-r from-orange-400 to-orange-600 rounded-2xl p-8 mb-8 text-white shadow-lg">
-        <h1 className="text-4xl font-bold drop-shadow-sm">Explore Campaigns</h1>
-        <p className="text-orange-100 mt-2 text-lg">
-          Together, we can create change — support causes that inspire you.
-        </p>
+  const { searchKey, setSearchKey } = useContext(CampaignFilterContext);
 
-        {/* SEARCH INPUT */}
-        <div className="mt-6 flex items-center gap-3">
-          <div className="flex items-center bg-white/20 backdrop-blur-lg rounded-lg px-4 py-2 w-full sm:w-3/4">
-            <Search className="text-white opacity-80" size={20} />
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="max-w-full px-6 mt-6">
+        <div className="bg-orange-500 rounded-3xl p-8 md:p-12 text-white shadow-lg">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Explore Campaigns
+            </h1>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 text-sm text-white transition border rounded-xl p-3"
+            >
+              <FaArrowLeft />
+              Back to Home
+            </Link>
+          </div>
+          <p className="text-white/80 mb-6">
+            Discover and support campaigns that make a real difference
+          </p>
+
+          {/* Search Bar */}
+          <div className="flex items-center bg-white rounded-xl px-4 py-3 text-gray-700 max-w-xl">
+            <Search className="text-gray-400 mr-3" />
             <input
-              type="text"
-              placeholder="Search for campaigns, names, or keywords..."
-              className="bg-transparent border-none focus:outline-none w-full text-white placeholder:text-orange-100"
+              value={searchKey}
+              onChange={(e) => setSearchKey(e.target.value)}
+              placeholder="Search campaigns by title..."
+              className="w-full outline-none bg-transparent"
             />
           </div>
         </div>
       </header>
 
-      {/* FILTER + SORT BAR */}
-      <div className="bg-white rounded-xl shadow p-4 mb-8">
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Layers size={18} className="text-orange-600"/>
-            <select className="border border-orange-400 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-300">
-              <option>All Categories</option>
-              <option>Medical</option>
-              <option>Education</option>
-              <option>Environment</option>
-              <option>Animal Welfare</option>
-            </select>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <TrendingUp size={18} className="text-orange-600"/>
-            <select className="border  border-orange-400 rounded-lg px-4 py-2 focus:ring-2 focus:ring-orange-400">
-              <option>Sort by</option>
-              <option >Most Funded</option>
-              <option>Recently Added</option>
-              <option>Trending</option>
-              <option>Ending Soon</option>
-            </select>
-          </div>
-
-         
-        </div>
-      </div>
-
-      {/* CAMPAIGN GRID */}
-      
+      {/* Campaign Cards */}
+      <main className="max-w-7xl mx-auto px-6 mt-12">
         <CampaignCard />
-        
-     
-      {/* FOOTER TAGLINE */}
-      <div className="text-center mt-12 text-gray-500">
+      </main>
+
+      {/* Footer Info */}
+      <div className="text-center mt-16 pb-10 text-gray-500">
         <Clock className="mx-auto mb-2" />
-        <p>New campaigns get added every day. Stay tuned and keep supporting </p>
+        <p className="text-sm">New campaigns are added daily</p>
       </div>
+
     </div>
   );
 }

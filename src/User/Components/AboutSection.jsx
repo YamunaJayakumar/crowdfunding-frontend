@@ -38,7 +38,7 @@ function AboutSection() {
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-start">
         {/* Who We Are */}
         <div>
-          <h2 className="text-4xl font-bold text-gray-600 mb-6">
+          <h2 className="text-4xl font-bold text-black mb-6">
             Who We Are
           </h2>
           <p className="text-gray-400 mb-4">
@@ -53,14 +53,14 @@ function AboutSection() {
 
         {/* How We Work */}
         <div>
-          <h2 className="text-4xl font-bold text-gray-600 mb-6">
+          <h2 className="text-4xl font-bold text-black mb-6">
             How We Work
           </h2>
           <div className="grid grid-cols-1 gap-6">
             {howWeWorkSteps.map((step) => (
               <div
                 key={step.title}
-                className="flex items-start gap-4 bg-white rounded-3xl p-6 shadow hover:shadow-lg transition"
+                className="flex items-start gap-4 bg-white rounded-3xl p-6"
               >
                 <div
                   className={`p-4 rounded-xl flex items-center justify-center ${step.bg}`}
@@ -68,7 +68,7 @@ function AboutSection() {
                   {step.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-600">
+                  <h3 className="text-xl font-semibold text-black">
                     {step.title}
                   </h3>
                   <p className="text-gray-400 mt-1">{step.description}</p>
